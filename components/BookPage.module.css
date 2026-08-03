@@ -1,0 +1,429 @@
+/* One leaf of the booklet, 380 × 570 in the reader's coordinate space.
+   Everything that does not depend on the cover colour lives here. */
+
+.page {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  font-family: var(--font-body);
+  color: #000;
+  background: #fff;
+  /* Keep the grain's multiply inside this leaf. */
+  isolation: isolate;
+}
+
+/* Paper tooth. Fractal noise multiplied over the finished page, so it darkens
+   into the stock the way grain does rather than sitting on top as a haze — it
+   barely touches the black panels and reads on the white and the orange. This
+   is a screen affordance; the print edition comes out on real paper. */
+.page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-size: 150px 150px;
+  /* feFuncA pins alpha at 1 — fractalNoise randomises the alpha channel too,
+     and a see-through grain barely multiplies at all. */
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='150'%20height='150'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.7'%20numOctaves='4'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR%20type='linear'%20slope='0.42'%20intercept='0.58'/%3E%3CfeFuncG%20type='linear'%20slope='0.42'%20intercept='0.58'/%3E%3CfeFuncB%20type='linear'%20slope='0.42'%20intercept='0.58'/%3E%3CfeFuncA%20type='linear'%20slope='0'%20intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect%20width='150'%20height='150'%20filter='url%28%23n%29'/%3E%3C/svg%3E");
+}
+
+/* ── Cover ─────────────────────────────────────────────────────────────── */
+
+.cover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 40px 30px;
+}
+.coverRule {
+  position: absolute;
+  inset: 11px;
+  border: 2px solid #000;
+  pointer-events: none;
+}
+.portrait {
+  position: relative;
+  width: 182px;
+  height: 202px;
+}
+.portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* The morph replaces the still outright — see CoverPortrait for why this is a
+   cut and not a fade. */
+.morph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.coverTitle {
+  position: relative;
+  text-align: center;
+  color: #000;
+}
+.coverKicker {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+.coverName {
+  font-family: var(--font-heading);
+  font-size: 49px;
+  line-height: 0.92;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+.coverFooter {
+  position: absolute;
+  bottom: 26px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #000;
+}
+/* A URL is far longer than "in her own words" — it has to come in a step and
+   lose most of the tracking to stay inside the keyline. */
+.coverFooterUrl {
+  font-size: 8.5px;
+  letter-spacing: 0.13em;
+  padding: 0 24px;
+  word-break: break-all;
+}
+
+/* ── Chapter opener ────────────────────────────────────────────────────── */
+
+.chapter {
+  position: absolute;
+  inset: 0;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 34px;
+  gap: 14px;
+}
+.chapterBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 74px;
+  background: #000;
+}
+.chapterNumber {
+  position: absolute;
+  top: 26px;
+  left: 34px;
+  font-size: 10.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+.chapterHeading {
+  font-family: var(--font-heading);
+  font-size: 35px;
+  line-height: 1.02;
+  text-transform: uppercase;
+}
+.chapterDivider {
+  width: 100%;
+  height: 6px;
+  background: #000;
+}
+.chapterBody {
+  font-size: 13.5px;
+  line-height: 1.6;
+  max-width: 250px;
+}
+.chapterFolio {
+  position: absolute;
+  bottom: 24px;
+  left: 34px;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #000;
+}
+
+/* ── Quotation ─────────────────────────────────────────────────────────── */
+
+.quote {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 30px;
+}
+.quoteHeader {
+  background: #000;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.quoteKicker {
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.placeholderTag {
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  color: #000;
+}
+.quoteBody {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+}
+.quoteMark {
+  font-family: var(--font-heading);
+  font-size: 30px;
+  line-height: 0.8;
+  margin-bottom: 10px;
+}
+.quoteText {
+  font-family: var(--font-heading);
+  line-height: 1.24;
+  letter-spacing: -0.01em;
+  color: #000;
+}
+.quoteFooter {
+  margin: 0 30px;
+  border-top: 3px solid #000;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.quoteCite {
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: #333;
+}
+.quoteMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #666;
+}
+.quoteMeta .folio {
+  color: #000;
+}
+
+/* ── Running text (imprint, foreword, sources) ─────────────────────────── */
+
+.text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 30px;
+}
+.textHeader {
+  background: #000;
+  padding: 12px 30px;
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.textColumn {
+  padding: 22px 30px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.textHeading {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+.textRule {
+  width: 56px;
+  height: 6px;
+}
+.textParagraph {
+  font-size: 13px;
+  line-height: 1.62;
+  color: #1a1a1a;
+  text-wrap: pretty;
+}
+.textFolio {
+  margin-top: auto;
+  padding: 0 30px;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #000;
+}
+
+/* ── Contents ──────────────────────────────────────────────────────────── */
+
+.contents {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 26px;
+}
+.contentsHeader {
+  background: #000;
+  padding: 14px 30px;
+  font-family: var(--font-heading);
+  font-size: 24px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.contentsList {
+  padding: 16px 30px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tocRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #1a1a1a;
+  font-family: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+}
+.tocRow:hover {
+  color: #000;
+  background: #ffe4d1;
+}
+.tocNumber {
+  width: 16px;
+  flex: none;
+  font-family: var(--font-heading);
+  font-size: 10.5px;
+  color: #000;
+}
+.tocLeader {
+  flex: 1;
+  border-bottom: 1px dotted #999;
+  transform: translateY(-3px);
+}
+.tocPage {
+  color: #666;
+  font-size: 10.5px;
+}
+.contentsFolio {
+  margin-top: auto;
+  padding: 0 30px;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #000;
+}
+
+/* ── Appendix: the voting record ───────────────────────────────────────── */
+
+.table {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 24px;
+}
+.tableHeader {
+  background: #000;
+  padding: 12px 26px;
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.tableColumn {
+  padding: 18px 26px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.tableHeading {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+.tableHead {
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  gap: 8px;
+  padding-bottom: 6px;
+  border-bottom: 3px solid #000;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #000;
+}
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #ccc;
+  align-items: start;
+}
+.voteBill {
+  font-size: 11px;
+  line-height: 1.35;
+  color: #1a1a1a;
+}
+.voteYear {
+  font-size: 9px;
+  color: #666;
+}
+.voteValue {
+  text-align: right;
+  font-family: var(--font-heading);
+  font-size: 10.5px;
+  text-transform: uppercase;
+}
+.alignRight {
+  text-align: right;
+}
+.tableNote {
+  margin-top: auto;
+  padding: 0 26px;
+  font-size: 9px;
+  line-height: 1.5;
+  color: #666;
+}
+
+/* ── The blank verso behind the covers ─────────────────────────────────── */
+
+.blank {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+}

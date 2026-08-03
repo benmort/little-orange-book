@@ -1,0 +1,297 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   Organic — design-system tokens and component classes.
+   Ported verbatim from _ds/organic/styles.css. The web-font @import is gone:
+   Caprasimo and Figtree are loaded by next/font in app/layout.tsx, which
+   supplies --font-heading-family and --font-body-family.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --color-bg: #f5ead8;
+  --color-surface: #ebddc5;
+  --color-text: #201e1d;
+  --color-accent: #c67139;
+  --color-accent-2: #7a8a5e;
+  --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+
+  /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
+     same step of any role matches the others in visual value. */
+  --color-neutral-100: #f9f4ed;
+  --color-neutral-200: #eee7db;
+  --color-neutral-300: #dcd3c4;
+  --color-neutral-400: #c0b6a5;
+  --color-neutral-500: #a19786;
+  --color-neutral-600: #82796a;
+  --color-neutral-700: #645c50;
+  --color-neutral-800: #474238;
+  --color-neutral-900: #2e2b25;
+
+  --color-accent-100: #fff2eb;
+  --color-accent-200: #ffe1d0;
+  --color-accent-300: #ffc6a5;
+  --color-accent-400: #f6a06b;
+  --color-accent-500: #d67f48;
+  --color-accent-600: #b2622d;
+  --color-accent-700: #8c491a;
+  --color-accent-800: #643312;
+  --color-accent-900: #402310;
+
+  --color-accent-2-100: #f0fae1;
+  --color-accent-2-200: #e1eecc;
+  --color-accent-2-300: #ccdbb2;
+  --color-accent-2-400: #aebf92;
+  --color-accent-2-500: #8fa073;
+  --color-accent-2-600: #728157;
+  --color-accent-2-700: #56633f;
+  --color-accent-2-800: #3d472b;
+  --color-accent-2-900: #272e1b;
+
+  --font-heading: var(--font-heading-family), system-ui, sans-serif;
+  --font-heading-weight: 400;
+  --font-body: var(--font-body-family), system-ui, sans-serif;
+
+  --space-1: 4.4px;
+  --space-2: 8.8px;
+  --space-3: 13.2px;
+  --space-4: 17.6px;
+  --space-6: 26.4px;
+  --space-8: 35.2px;
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+
+  /* Elevation — derived from the ground: soft ink-tinted shadows on a
+     light theme, a hairline edge + ambient darkness on a dark one. */
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2e2b25 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2e2b25 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2e2b25 22%, transparent);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin: 0 0 var(--space-2);
+}
+h1 { font-size: 42px; }
+h2 { font-size: 32px; }
+h3 { font-size: 25px; }
+h4 { font-size: 20px; }
+h5 { font-size: 16px; }
+h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+p { margin: 0 0 var(--space-3); }
+a { color: var(--color-accent); text-underline-offset: 3px; }
+img { display: block; max-width: 100%; }
+figure { margin: 0; }
+figcaption {
+  font-size: 11px;
+  margin-top: var(--space-1);
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+.text-muted { color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+/* — rules — */
+.hr {
+  height: 1px;
+  border: 0;
+  margin: var(--space-4) 0;
+  background: var(--color-divider);
+}
+
+/* — buttons — */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: var(--space-2) calc(var(--space-3) * 1.2);
+  border-radius: var(--radius-md);
+}
+.btn svg { display: block; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-primary { background: var(--color-accent); color: var(--color-bg); }
+.btn-primary:hover { background: var(--color-accent-600); }
+.btn-primary:active { background: var(--color-accent-700); }
+.btn-secondary { border-color: var(--color-divider); }
+.btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+.btn-secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
+.btn-ghost { color: var(--color-accent); padding-inline: var(--space-1); }
+.btn-ghost:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
+.btn-ghost:active { background: color-mix(in srgb, var(--color-accent) 18%, transparent); }
+.btn-icon { width: 36px; height: 36px; padding: 0; }
+.btn-block { width: 100%; margin-top: var(--space-2); }
+
+/* — cards — */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-surface);
+}
+.card-kicker { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+.card-title {
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: 17px;
+  line-height: 1.2;
+}
+.card-body { margin: 0; font-size: 13px; opacity: 0.8; flex: 1; }
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: color-mix(in srgb, var(--color-text) 50%, transparent);
+}
+.elev-sm { box-shadow: var(--shadow-sm); }
+.elev-md { box-shadow: var(--shadow-md); }
+.elev-lg { box-shadow: var(--shadow-lg); }
+
+/* — tags — */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  padding: 3px 10px;
+}
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-accent-2 { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
+.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+
+/* — tables — */
+.table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table th {
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-divider);
+}
+.table td {
+  padding: var(--space-2);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+}
+.table tbody tr:hover { background: color-mix(in srgb, var(--color-text) 4%, transparent); }
+
+/* — rounded frame: everything softens, small controls go pill — */
+.card { border-radius: calc(var(--radius-lg) * 1.15); }
+.btn, .tag { border-radius: 999px; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   The Little Orange Book — document shell.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+body {
+  margin: 0;
+  background: #08080a;
+}
+a { color: #d4ff00; }
+a:hover { color: #ff00a0; }
+
+/* ── Page-turn keyframes ───────────────────────────────────────────────────
+   Each turn alternates between the plain and the "B" variant of its animation
+   so a second turn fired mid-flight restarts rather than being ignored. */
+@keyframes leafFwd {
+  0%   { transform: rotateY(0deg) translateZ(0); }
+  50%  { transform: rotateY(-90deg) translateZ(6px); }
+  100% { transform: rotateY(-180deg) translateZ(0); }
+}
+@keyframes leafBwd {
+  0%   { transform: rotateY(-180deg) translateZ(0); }
+  50%  { transform: rotateY(-90deg) translateZ(6px); }
+  100% { transform: rotateY(0deg) translateZ(0); }
+}
+@keyframes leafFwdB {
+  0%   { transform: rotateY(0deg) translateZ(0); }
+  50%  { transform: rotateY(-90deg) translateZ(6px); }
+  100% { transform: rotateY(-180deg) translateZ(0); }
+}
+@keyframes leafBwdB {
+  0%   { transform: rotateY(-180deg) translateZ(0); }
+  50%  { transform: rotateY(-90deg) translateZ(6px); }
+  100% { transform: rotateY(0deg) translateZ(0); }
+}
+/* Specular falloff. A face lit head-on at 0° goes dark as it turns edge-on at
+   90°, and the face coming the other way brightens as it arrives. Both curves
+   are pinned at the ends to the gloss the flat page carries, so committing a
+   turn changes nothing about the lighting. */
+@keyframes glossOut {
+  0%   { opacity: 1; }
+  18%  { opacity: 0.92; }
+  34%  { opacity: 0.66; }
+  50%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes glossIn {
+  0%   { opacity: 0; }
+  50%  { opacity: 0; }
+  66%  { opacity: 0.66; }
+  82%  { opacity: 0.92; }
+  100% { opacity: 1; }
+}
+
+@keyframes leafFadeOut { 0%, 88% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes leafFadeIn { 0% { opacity: 0; } 12%, 100% { opacity: 1; } }
+@keyframes frontShade { 0% { opacity: 0.02; } 46% { opacity: 0.42; } 100% { opacity: 0.22; } }
+@keyframes backShade { 0% { opacity: 0.5; } 54% { opacity: 0.3; } 100% { opacity: 0.02; } }
+@keyframes castFwd {
+  0%   { opacity: 0.40; transform: scaleX(1); }
+  55%  { opacity: 0.22; transform: scaleX(0.55); }
+  100% { opacity: 0; transform: scaleX(0.1); }
+}
+@keyframes castBwd {
+  0%   { opacity: 0; transform: scaleX(0.1); }
+  55%  { opacity: 0.22; transform: scaleX(0.55); }
+  100% { opacity: 0.40; transform: scaleX(1); }
+}
+
+/* ── Print: an A6-ish 105 × 148 mm pocket booklet ──────────────────────────
+   Global (not module-scoped) because the print switch flips two whole trees. */
+.printbook { display: none; }
+
+@media print {
+  .screenonly { display: none !important; }
+  .printbook { display: block !important; }
+  @page { size: 105mm 148mm; margin: 0; }
+  /* The reader's near-black ground would print the ink invisible. */
+  html, body { background: #fff !important; }
+  .printpage { background: #fff; }
+  .printpage { break-after: page; page-break-after: always; }
+  /* Without this the final break emits a trailing blank sheet. */
+  .printpage:last-child { break-after: auto; page-break-after: auto; }
+}

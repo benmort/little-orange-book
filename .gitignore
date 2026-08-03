@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+.vercel
+.env*.local
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+
+# Source morph assets — 202 MB, including a 114 MB GIF that exceeds GitHub's
+# 100 MB per-file limit. Keep them locally; public/ holds the web encodes.
+output/
