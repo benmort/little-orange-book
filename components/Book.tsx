@@ -513,27 +513,53 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
       "linear-gradient(90deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.30) 42%,rgba(0,0,0,0.5) 50%,rgba(0,0,0,0.30) 58%,rgba(0,0,0,0) 100%)",
   };
 
-  /* The block of leaves either side of the spine, seen fore-edge on. Their
-     thickness is the honest one — what you have read stacked left, what is left
-     stacked right — so the depth visibly crosses from one side to the other as
-     you work through the book, and each cover closes against a full block. */
-  const EDGE_MAX = 15;
-  const readFrac = Math.min(1, Math.max(0, geom / lastIndex));
-  const edgeW = { left: EDGE_MAX * readFrac, right: EDGE_MAX * (1 - readFrac) };
+  /* The block of leaves under each half. Thickness is the honest one — what you
+     have read stacked left, what is left stacked right — so the depth crosses
+     from one side to the other as you work through, and each cover closes
+     against a full block.
 
-  const foreEdgeStyle = (side: "left" | "right"): CSSProperties => ({
-    position: "absolute",
-    top: 6,
-    bottom: 6,
-    width: Math.round(edgeW[side]),
-    zIndex: 1,
-    pointerEvents: "none",
-    left: side === "left" ? rowLeft - edgeW.left : spineX + (rightOpen ? PAGE_W : 0) - 2,
-    borderRadius: side === "left" ? "8px 0 0 8px" : "0 8px 8px 0",
-    background: "repeating-linear-gradient(180deg,#fff 0 2px,#c9c9c9 2px 4px)",
-    transition: `left ${SLIDE}, width ${SLIDE}, opacity 300ms ease`,
-    opacity: (side === "left" ? leftOpen : rightOpen) ? 1 : 0,
-  });
+     Drawn as a staircase of box-shadows behind the page: one copy of the page
+     box per sheet, stepping outward and down, alternating stock and edge so it
+     striates like a cut block. The layer count is fixed and only the step
+     scales, which is what lets the depth animate — a shadow list can only
+     interpolate against another list of the same length. */
+  const BLOCK_LAYERS = 16;
+  const BLOCK_DEPTH = 17;
+  const readFrac = Math.min(1, Math.max(0, geom / lastIndex));
+  const depth = { left: BLOCK_DEPTH * readFrac, right: BLOCK_DEPTH * (1 - readFrac) };
+
+  const blockShadow = (thickness: number, out: 1 | -1) => {
+    const step = thickness / BLOCK_LAYERS;
+    const layers: string[] = [];
+    for (let n = 1; n <= BLOCK_LAYERS; n += 1) {
+      const x = (step * n * out).toFixed(2);
+      // The block is seen slightly from above, so it also drops away downward.
+      const y = (step * n * 0.5).toFixed(2);
+      layers.push(`${x}px ${y}px 0 ${n % 2 ? "#cfcdc7" : "#f6f5f1"}`);
+    }
+    // Grounds the whole block rather than each sheet.
+    layers.push(`${(thickness * out).toFixed(2)}px ${(thickness * 0.5 + 2).toFixed(2)}px 6px rgba(0,0,0,0.34)`);
+    return layers.join(",");
+  };
+
+  const blockStyle = (side: "left" | "right"): CSSProperties => {
+    const open = side === "left" ? leftOpen : rightOpen;
+    return {
+      position: "absolute",
+      top: 0,
+      left: side === "left" ? rowLeft : spineX,
+      width: PAGE_W,
+      height: PAGE_H,
+      // Tree order puts these behind the slots, which sit at z-index auto.
+      zIndex: 0,
+      pointerEvents: "none",
+      background: "#f6f5f1",
+      borderRadius: side === "left" ? "14px 4px 4px 14px" : "4px 14px 14px 4px",
+      boxShadow: blockShadow(open ? depth[side] : 0, side === "left" ? -1 : 1),
+      transition: `left ${SLIDE}, box-shadow ${SLIDE}, opacity 300ms ease`,
+      opacity: open ? 1 : 0,
+    };
+  };
 
   /* The leaf: dragged transforms are set directly, released ones are handed to
      a transition, and untouched ones run the keyframe animation. */
@@ -695,8 +721,8 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
           <div style={stageStyle}>
             <div style={bookRowStyle}>
               {/* Behind the leaves, so the blocks read as what the pages sit on. */}
-              <div style={foreEdgeStyle("left")} />
-              <div style={foreEdgeStyle("right")} />
+              <div style={blockStyle("left")} />
+              <div style={blockStyle("right")} />
 
               <div style={leftSlotStyle}>
                 <div className={styles.leftLeaf}>

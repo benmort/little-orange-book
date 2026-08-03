@@ -181,6 +181,22 @@ spread while the front cover is still swinging open and narrows back to a single
 cover closes over it, rather than snapping once the turn lands. Page content still follows the
 current index; only the layout runs ahead.
 
+### Depth
+
+Each half sits on a block of leaves whose thickness is the honest one — what you have read stacked
+left, what is left stacked right — so the depth crosses from one side to the other as you work
+through, and each cover closes against a full block.
+
+It is drawn as a staircase of box-shadows behind the page: one copy of the page box per sheet,
+stepping outward and down, alternating stock and edge so it striates like a cut block, with a
+single soft shadow underneath to ground the whole thing rather than each sheet. The layer count is
+fixed at 16 and only the step scales — a shadow list can only interpolate against another list of
+the same length, so a varying count would snap instead of animate.
+
+The blocks are siblings of the two slots rather than children, because the left slot clips its own
+overflow to collapse and would cut the block off at the spine. They rely on tree order to sit
+behind the pages: an explicit `z-index` above `auto` puts them in front of the leaves instead.
+
 Below 860 px the spread collapses to a single page; the aside drops beneath the book. The reading
 position is remembered in `localStorage` under `lob-page`.
 
