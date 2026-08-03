@@ -1,0 +1,1121 @@
+{
+  "source": "They Vote For You",
+  "sourceUrl": "https://theyvoteforyou.org.au/people/senate/10280",
+  "note": "agreement is the share of relevant divisions in which the member voted in favour of the policy.",
+  "politician": {
+    "name": "Pauline Hanson",
+    "party": "Pauline Hanson's One Nation Party",
+    "house": "SENATE",
+    "electorate": "Queensland",
+    "rebellions": 0,
+    "votesAttended": 2288,
+    "votesPossible": 4314,
+    "lastSyncedAt": "2026-07-10T12:26:52.906Z"
+  },
+  "positions": [
+    {
+      "tvfyId": 142,
+      "policy": "a Free Trade Agreement with China",
+      "description": "the federal government should enter into a Free Trade Agreement (FTA) with China to create more favourable trading conditions between China and Australia",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 256,
+      "policy": "an independent inquiry into Attorney-General Christian Porter",
+      "description": "the federal government should establish an independent inquiry into whether Attorney-General Christian Porter is fit to remain in his role in light of the recent sexual assault allegation",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 291,
+      "policy": "banning pay secrecy clauses",
+      "description": "the federal government should ban pay secrecy clauses so that employees can freely discuss and compare their pay with others",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 263,
+      "policy": "building dedicated quarantine facilities (COVID-19)",
+      "description": "the federal government should build dedicated quarantine facilities in every state and territory as part of its response to the COVID-19 pandemic",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 216,
+      "policy": "community right to say no to nuclear waste disposal sites",
+      "description": "the federal government should be required to seek the consent of local communities before selecting new sites for radioactive waste disposal",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 145,
+      "policy": "doctor-initiated medical transfers for asylum seekers",
+      "description": "the Federal Government should pass laws that ensure that people seeking asylum who are being held at offshore processing centres will be transferred to Australia for medical attention if more than one doctor say they need it, unless the Home Affairs Minister rejects it for security reasons",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 309,
+      "policy": "implementing the Uluru Statement from the Heart in full",
+      "description": "the federal government should implement the Uluru Statement from the Heart in full, including an Aboriginal and Torres Strait Islander Voice and a Makarrata Commission for agreement-making and truth-telling",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 258,
+      "policy": "implementing the recommendations of the Royal Commission into Aboriginal Deaths in Custody",
+      "description": "the federal government should implement all the recommendations of the Royal Commission into Aboriginal Deaths in Custody in partnership with First Nations communities.",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 349,
+      "policy": "increasing access to subsidised childcare",
+      "description": "the federal government should introduce legislation to make more subsidised childcare hours available to families",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 184,
+      "policy": "increasing eligibility requirements for Australian citizenship",
+      "description": "the federal government should take a restrictive approach to granting Australian citizenship by introducing more eligibility requirements, such as applicants needing greater English language proficiency and needing to spend more time living in Australia before they can submit their applications",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 171,
+      "policy": "increasing federal government support for childcare",
+      "description": "the federal government should increase financial support for childcare and early childhood eduction by, for example, supporting increased wages for workers and providing grants for not-for-profit community child care initiatives",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 41,
+      "policy": "increasing fishing restrictions",
+      "description": "the federal government should increase fishing restrictions so that fish populations are sustainable",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 188,
+      "policy": "increasing penalties for breach of data",
+      "description": "the federal government should increase penalties for breach of data by for-profit companies that have been contracted by the government to store sensitive information or to provide services to citizens",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 30,
+      "policy": "increasing protection of Aboriginal heritage sites",
+      "description": "the federal government should increase the protection of Aboriginal and Torres Strait Islander cultural heritage sites",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 68,
+      "policy": "increasing the diversity of media ownership",
+      "description": "the federal government should use regulation to increase the diversity of publishers and broadcasters in Australia's media industry by, for example, setting a threshold for the maximum market share of any one company.",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 131,
+      "policy": "increasing the initial tax rate for working holiday makers to 19%",
+      "description": "the federal government should increase the tax rate for working holiday visa holders so that they are taxed at a rate of 19% on every dollar earned up to $37,000",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 319,
+      "policy": "introducing a Pacific Engagement Visa (PEV)",
+      "description": "the federal government should introduce a permanent Pacific Engagement Visa (PEV) to encourage more permanent migration to Australia from Pacific Island countries",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 335,
+      "policy": "introducing digital ID",
+      "description": "the federal government should introduce legislation to establish digital ID in Australia",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 227,
+      "policy": "investing in climate science",
+      "description": "the federal government should invest in climate science to ensure that Australia is best equipped to deal with the challenges of climate change",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 221,
+      "policy": "making the cashless debit card program voluntary and not mandatory",
+      "description": "the federal government should make the cashless debit card program (a program where welfare payments are put onto controlled debit cards, also known as Indue cards, for restricted use) voluntary so that people are not forced to participate in it",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 240,
+      "policy": "paid parental leave equality for stay-at-home mums and dads",
+      "description": "the federal government should ensure that paid parental leave provisions apply equally to both female and male primary care givers",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 336,
+      "policy": "reducing tax concessions for high socio-economic status",
+      "description": "the federal government should reduce tax concessions for high earners and those of high socio-economic status",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 153,
+      "policy": "requiring every native title claimant to sign land use agreements",
+      "description": "all native title claimants need to sign an Indigenous Land Use Agreement before the Agreement can be registered by the Native Title Registrar (agreements like this let, for example, mining companies mine in an area covered by native title)",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 248,
+      "policy": "the Murray Darling Basin Plan",
+      "description": "the federal government should support the full delivery of the Murray Darling Basin Plan",
+      "agreement": 0
+    },
+    {
+      "tvfyId": 338,
+      "policy": "targetting homelessness in specific vulnerable groups",
+      "description": "the federal government should work to address homelessness in specific vulnerable groups, such as older women and First Nations people",
+      "agreement": 0.89
+    },
+    {
+      "tvfyId": 118,
+      "policy": "ending immigration detention on Nauru",
+      "description": "the federal government should close its Nauru Regional Processing Centre and stop all Nauru-based processing of people's claims for asylum",
+      "agreement": 1.4
+    },
+    {
+      "tvfyId": 297,
+      "policy": "transgender children and young people having access to gender affirming healthcare",
+      "description": "the federal government should not restrict access to gender affirming healthcare for transgender people under the age of eighteen, rather they should leave healthcare matters in the hands of the professional bodies responsible for administering such healthcare (e.g., the Australian Medical Association, the Australian Psychological Society, etc.)",
+      "agreement": 1.6
+    },
+    {
+      "tvfyId": 155,
+      "policy": "making sanitary items GST-free",
+      "description": "GST should not be charged on sanitary items (such as tampons and pads) as they are health products",
+      "agreement": 1.9
+    },
+    {
+      "tvfyId": 72,
+      "policy": "decreasing the gender pay gap",
+      "description": "the federal government should introduce legislation that reduces the gap in income between women and men and ensures both sexes are paid equally well",
+      "agreement": 2.4
+    },
+    {
+      "tvfyId": 225,
+      "policy": "reducing air pollution",
+      "description": "the federal government should develop policies and legislation that reduce air pollution, including vehicle emissions",
+      "agreement": 2.4
+    },
+    {
+      "tvfyId": 228,
+      "policy": "building community climate change resilience",
+      "description": "the federal government should invest in efforts to increase community resilience to extreme weather events, such as bushfires and floods",
+      "agreement": 3.1
+    },
+    {
+      "tvfyId": 206,
+      "policy": "pill testing",
+      "description": "the federal government should develop and implement a pill testing policy to reduce the risk of death and/or injury caused by taking illicit drugs",
+      "agreement": 3.1
+    },
+    {
+      "tvfyId": 144,
+      "policy": "changing the date of Australia Day",
+      "description": "the date of Australia Day should be changed from 26 January, which was the day the First Fleet arrived at Port Jackson, Sydney, and is a day of mourning for many Australians",
+      "agreement": 3.7
+    },
+    {
+      "tvfyId": 243,
+      "policy": "a Royal Commission into Robodebt",
+      "description": "the federal government should establish a Royal Commission to investigate the government's Robodebt scheme, officially known as the Online Compliance Intervention, which related to automated debt recovery",
+      "agreement": 4.5
+    },
+    {
+      "tvfyId": 253,
+      "policy": "extending Jobkeeper Payment",
+      "description": "The JobKeeper payment, which is part of the federal government's response to the Coronavirus (COVID-19) pandemic, should be extended for industries that are still being adversely affected by the pandemic, such as the tourism industry",
+      "agreement": 4.5
+    },
+    {
+      "tvfyId": 99,
+      "policy": "increasing the foreign aid budget to 0.7% of Gross National Income",
+      "description": "the federal government should allocate 0.7% of Gross National Income (GNI) to foreign aid in line with the United Nations' target",
+      "agreement": 4.5
+    },
+    {
+      "tvfyId": 273,
+      "policy": "limiting global warming to 1.5 degrees ",
+      "description": "the federal government should commit to a target of limiting global warming to 1.5 degrees celsius above pre-industrial levels",
+      "agreement": 4.5
+    },
+    {
+      "tvfyId": 122,
+      "policy": "protecting the Great Barrier Reef",
+      "description": "the federal government should make laws and regulations that protect and conserve the health of the Great Barrier Reef for future generations",
+      "agreement": 4.5
+    },
+    {
+      "tvfyId": 264,
+      "policy": "treating the COVID vaccine rollout as a matter of urgency",
+      "description": "the federal government should treat the COVID-19 vaccination as a matter of urgency and ensure that Australians are being vaccinated as fast as possible, starting with essential workers such as staff working in hospitals and aged care facilities",
+      "agreement": 4.5
+    },
+    {
+      "tvfyId": 293,
+      "policy": "procedural fairness",
+      "description": "all Australian laws should be subject to procedural fairness requirements so that people can request reasons for government decisions that impact them personally and can appeal those decisions on the basis of whether they were made lawfully",
+      "agreement": 5.1
+    },
+    {
+      "tvfyId": 222,
+      "policy": "banning new thermal coal mines",
+      "description": "the federal government should put a ban on new thermal coal mines opening in Australia",
+      "agreement": 5.6
+    },
+    {
+      "tvfyId": 85,
+      "policy": "restricting donations to political parties",
+      "description": "the federal government should introduce restrictions to the amount and type of donations that political parties can receive in order to prevent corruption or the appearance of corruption in government",
+      "agreement": 5.7
+    },
+    {
+      "tvfyId": 24,
+      "policy": "increasing Aboriginal land rights",
+      "description": "the federal government should increase Aboriginal and Torres Strait Islander land rights by, for example, increasing their legal recognition and protection",
+      "agreement": 5.9
+    },
+    {
+      "tvfyId": 137,
+      "policy": "more scrutiny of the Australian Defence Force",
+      "description": "there should be more scrutiny or oversight of the actions and powers of the Australian Defence Force (ADF), both within Australia and overseas",
+      "agreement": 5.9
+    },
+    {
+      "tvfyId": 318,
+      "policy": "the federal government calling for a ceasefire in Gaza (2023-26)",
+      "description": "the Australian Government should call for an immediate and permanent ceasefire to end the humanitarian disaster in Gaza that began in October 2023, which is now the subject of an ongoing case in the International Court of Justice (ICJ), in which South Africa is accusing Israel of genocide",
+      "agreement": 5.9
+    },
+    {
+      "tvfyId": 20,
+      "policy": "increasing investment in renewable energy",
+      "description": "the federal government should increase investment in renewable energy technologies",
+      "agreement": 6.1
+    },
+    {
+      "tvfyId": 183,
+      "policy": "the Paris Climate Agreement",
+      "description": "the federal government should amend its laws and policies to meet the objectives of the Paris Climate Agreement",
+      "agreement": 6.9
+    },
+    {
+      "tvfyId": 77,
+      "policy": "the Trans-Pacific Partnership (TPP) Agreement",
+      "description": "the federal government should support Australia joining the Trans-Pacific Partnership (TPP) Agreement, a trade agreement between countries along the rim of the Pacific Ocean, including Canada and New Zealand",
+      "agreement": 7.1
+    },
+    {
+      "tvfyId": 125,
+      "policy": "a national redress scheme for institutional abuse survivors",
+      "description": "the federal government should create and coordinate a National Redress Scheme for Survivors of Institutional Sexual Abuse, which was recommended by the Royal Commission into Institutional Responses to Child Sexual Abuse",
+      "agreement": 8.3
+    },
+    {
+      "tvfyId": 180,
+      "policy": "an inquiry into the Iraq War",
+      "description": "the federal government should support an inquiry into Australia's involvement in the Iraq War",
+      "agreement": 8.3
+    },
+    {
+      "tvfyId": 121,
+      "policy": "ending immigration detention on Manus Island",
+      "description": "the federal government should close its Manus Regional Processing Centre and stop all Manus-based processing of people's claims for asylum",
+      "agreement": 8.3
+    },
+    {
+      "tvfyId": 241,
+      "policy": "increasing funding for public schools",
+      "description": "the federal government should increase funding for public schools and prioritise their funding over non-government (private) schools",
+      "agreement": 8.3
+    },
+    {
+      "tvfyId": 117,
+      "policy": "increasing housing affordability",
+      "description": "the federal government should take national action to increase housing affordability so that all Australians have the chance to buy their own home",
+      "agreement": 8.3
+    },
+    {
+      "tvfyId": 98,
+      "policy": "increasing parliamentary entitlements for current MPs and Senators",
+      "description": "the federal governmnet should increase parliamentary entitlements for current MPs and Senators, such as legitimate expenditure, salary packages, superannuation entitlements and/or other allowances like the printing allowance",
+      "agreement": 8.3
+    },
+    {
+      "tvfyId": 4,
+      "policy": "increasing scrutiny of asylum seeker management",
+      "description": "there should be more independent access to detention centres and more information provided about the management of asylum seekers under Australian government policy, including the interception of boats at sea",
+      "agreement": 8.3
+    },
+    {
+      "tvfyId": 207,
+      "policy": "legalising pepper spray",
+      "description": "the federal government should legalise the importation of pepper spray and encourage state governments to legalise carrying pepper spray - especially by women - to deter and defend against attacks",
+      "agreement": 8.3
+    },
+    {
+      "tvfyId": 60,
+      "policy": "removing children from immigration detention",
+      "description": "the federal government should not put asylum seeker children into immigration detention and should release all children now in detention",
+      "agreement": 8.3
+    },
+    {
+      "tvfyId": 250,
+      "policy": "ending government investment in fossil fuels",
+      "description": "the federal government should stop all investment in fossil fuels",
+      "agreement": 9.3
+    },
+    {
+      "tvfyId": 172,
+      "policy": "federal government action on animal & plant extinctions",
+      "description": "the federal government needs to support research and conservation initiatives that aim to put a stop to the current trajectory of animal and plant extinctions in Australia",
+      "agreement": 12
+    },
+    {
+      "tvfyId": 39,
+      "policy": "increasing restrictions on gambling",
+      "description": "the federal government should increase restrictions on the gambling industry in order to address the issue of problem gambling",
+      "agreement": 13
+    },
+    {
+      "tvfyId": 3,
+      "policy": "a carbon price",
+      "description": "the federal government should introduce a carbon pricing mechanism",
+      "agreement": 14
+    },
+    {
+      "tvfyId": 343,
+      "policy": "making TAFE education fee-free",
+      "description": "the federal government should create fee-free places at TAFE for Australians (note: there is a separate fee-free university policy)",
+      "agreement": 14
+    },
+    {
+      "tvfyId": 281,
+      "policy": "reproductive bodily autonomy",
+      "description": "the federal government should ensure that Australian laws protect the reproductive bodily autonomy of women and other people capable of childbearing by, for example, protecting them from pregnancy-related discrimination and ensuring they have access to pregnancy-related healthcare services, which include affordable contraception, maternity care and abortion services",
+      "agreement": 14
+    },
+    {
+      "tvfyId": 214,
+      "policy": "transgender rights and protections",
+      "description": "the federal government should support the rights of transgender people (including genderfluid, nonbinary and genderqueer people) by amending laws and policies to support healthy lives by, for example, ensuring that appropriate healthcare is available nationwide and that trans people are protected from discrimination and harassment",
+      "agreement": 14
+    },
+    {
+      "tvfyId": 176,
+      "policy": "universal access to abortion services",
+      "description": "the federal government should ensure that all Australians have access to abortion services",
+      "agreement": 14
+    },
+    {
+      "tvfyId": 235,
+      "policy": "increasing access to the JobKeeper Payment",
+      "description": "the JobKeeper payment, which is part of the federal government's response to the Coronavirus (COVID-19) pandemic, should be made available to more workers, including casual workers, workers with major charities, working-visa holders who are still in the country, and workers in sectors such as Education, Disability and Local Government",
+      "agreement": 15
+    },
+    {
+      "tvfyId": 158,
+      "policy": "criminalising \"revenge porn\"",
+      "description": "the federal government should make it a criminal offence to share intimate images without consent (known colloquially as \"revenge porn\") and not just leave it up to the state-level governments to criminalise it separately in each State and Territory",
+      "agreement": 18
+    },
+    {
+      "tvfyId": 219,
+      "policy": "increasing the Youth Allowance rate",
+      "description": "the federal government should increase the Youth Allowance rate to ensure that it covers basic living costs",
+      "agreement": 18
+    },
+    {
+      "tvfyId": 236,
+      "policy": "assisting the Arts sector through the coronavirus pandemic",
+      "description": "the federal government should develop a specific Coronavirus (COVID-19) response package for the Arts and Entertainment sector as many workers in that sector are ineligible for the JobKeeper Payment",
+      "agreement": 19
+    },
+    {
+      "tvfyId": 289,
+      "policy": "decreasing government funding for private schools",
+      "description": "private schools (also known as independent or non-government schools) should not receive significant funding from the government",
+      "agreement": 19
+    },
+    {
+      "tvfyId": 310,
+      "policy": "making university education fee-free",
+      "description": "the federal government should create fee-free places at university for Australians (note: there is a separate fee-free TAFE policy)",
+      "agreement": 19
+    },
+    {
+      "tvfyId": 360,
+      "policy": "paid placements for all students",
+      "description": "the federal government should ensure that all Australian students who are undertaking mandatory placements as part of their tertiary or vocational qualifications should receive payment for that work",
+      "agreement": 19
+    },
+    {
+      "tvfyId": 23,
+      "policy": "more scrutiny of intelligence services & police",
+      "description": "there should be more scrutiny or oversight of the actions and powers of Australian intelligence and law enforcement agencies, including the Australian Security Intelligence Organisation (ASIO), the Australian Secret Intelligence Service (ASIS) and the Australian Federal Police (AFP)",
+      "agreement": 20
+    },
+    {
+      "tvfyId": 15,
+      "policy": "increasing protection of Australia's fresh water",
+      "description": "the federal government should introduce legislation that increases the protection of Australia's fresh water resources, including its river and groundwater systems",
+      "agreement": 21
+    },
+    {
+      "tvfyId": 285,
+      "policy": "net zero emissions by 2050",
+      "description": "the federal government should commit to achieving net zero emissions by 2050 as part of Australia's efforts to address climate change",
+      "agreement": 22
+    },
+    {
+      "tvfyId": 316,
+      "policy": "climate change mitigation strategies (e.g., carbon capture and storage)",
+      "description": "the federal government should encourage climate mitigation strategies, including carbon capture and storage (CCS) and marine geoengineering",
+      "agreement": 23
+    },
+    {
+      "tvfyId": 179,
+      "policy": "increasing the Newstart Allowance rate",
+      "description": "the federal government should increase the Newstart Allowance rate to ensure that it covers basic living costs",
+      "agreement": 23
+    },
+    {
+      "tvfyId": 17,
+      "policy": "increasing marine conservation",
+      "description": "the federal government should introduce legislation and regulations that protect and conserve Australia's marine ecosystems such as the Great Barrier Reef",
+      "agreement": 24
+    },
+    {
+      "tvfyId": 126,
+      "policy": "strengthening gun control laws",
+      "description": "the federal government should maintain and strengthen gun control laws and make sure they're the same around Australia",
+      "agreement": 24
+    },
+    {
+      "tvfyId": 321,
+      "policy": "considering motions on Gaza (2023-26) (procedural)",
+      "description": "the federal government should suspend the usual procedural rules - known as standing orders - that would otherwise prevent our representatives from considering and voting on motions related to the humanitarian disaster in Gaza that began in October 2023 and which is now the subject of an ongoing case in the International Court of Justice (ICJ), in which South Africa is accusing Israel of genocide",
+      "agreement": 25
+    },
+    {
+      "tvfyId": 6,
+      "policy": "increasing trade unions' powers in the workplace",
+      "description": "the federal government should introduce legislation that increases the powers and influence of trade unions in workplace relations",
+      "agreement": 25
+    },
+    {
+      "tvfyId": 195,
+      "policy": "increasing legal protections for LGBTI people",
+      "description": "the federal government should increase legal protections for people who identify as LGBTI (Lesbian, Gay, Bisexual, Transgender and Intersex) by, for example, getting rid of all current exemptions that permit discrimination against LGBTI people by religious insitutions (such as schools)",
+      "agreement": 26
+    },
+    {
+      "tvfyId": 94,
+      "policy": "protecting threatened forest and bushland habitats",
+      "description": "the federal government should protect threatened forest and bushland habitats from logging.",
+      "agreement": 29
+    },
+    {
+      "tvfyId": 116,
+      "policy": "federal action on public housing",
+      "description": "even though public housing is controlled by our state governments, the federal government should also take action to increase the availability of affordable public housing around Australia",
+      "agreement": 30
+    },
+    {
+      "tvfyId": 8,
+      "policy": "implementing refugee and protection conventions",
+      "description": "the federal government should implement the international conventions that relate to seeking refuge and protection from torture. These include the Convention relating to the Status of Refugees, the Protocol relating to the Status of Refugees and the non-refoulement provisions of the UN Convention Against Torture and the International Covenant on Civil and Political Rights",
+      "agreement": 30
+    },
+    {
+      "tvfyId": 25,
+      "policy": "increasing funding for university education",
+      "description": "the federal government should increase funding for university education",
+      "agreement": 30
+    },
+    {
+      "tvfyId": 260,
+      "policy": "no new fossil fuels projects",
+      "description": "the federal government should ban all new fossil fuel projects (oil, gas, coal) (for those votes that relate specifically to new thermal coal mines, see the policy \"for banning new thermal coal mines\")",
+      "agreement": 30
+    },
+    {
+      "tvfyId": 148,
+      "policy": "getting rid of Sunday and public holiday penalty rates",
+      "description": "there should be no penalty rates when employees work on Sundays or public holidays",
+      "agreement": 32
+    },
+    {
+      "tvfyId": 268,
+      "policy": "decreasing subsidisation of fossil fuels",
+      "description": "the federal government should decrease the subsidisation of taxpayer money into fossil fuels",
+      "agreement": 33
+    },
+    {
+      "tvfyId": 93,
+      "policy": "ending illegal logging",
+      "description": "the federal government should introduce legislation to end illegal logging and prevent the importation of timber that has been illegally harvested.",
+      "agreement": 33
+    },
+    {
+      "tvfyId": 308,
+      "policy": "having a referendum on whether to create an Indigenous Voice to Parliament",
+      "description": "there should be a public referendum on the question of whether the Constitution should be amended to include a requirement for an Aboriginal and Torres Strait Islander Voice to federal parliament, such as that envisaged by the Uluru Statement from the Heart",
+      "agreement": 33
+    },
+    {
+      "tvfyId": 363,
+      "policy": "reducing university student debt",
+      "description": "the federal government should introduce legislation that makes a one-time reduction in the level of Higher Education Loan Programme (HELP) debts - also known as HECS-HELP debts - for Australian university students",
+      "agreement": 33
+    },
+    {
+      "tvfyId": 97,
+      "policy": "the use of strong encryption technologies",
+      "description": "Strong encryption technologies are critical and necessary enablers of communications and commerce.\r\nStrong encryption technologies should not be restricted, back-doored, undermined or crippled by law.",
+      "agreement": 33
+    },
+    {
+      "tvfyId": 157,
+      "policy": "a Royal Commission into Violence and Abuse against People with Disability",
+      "description": "the federal government should establish a Royal Commission to investigate and report on violence and abuse against people with disability in light of the the disproportionately high number of reports of abuse of Australians with a disability by people who are meant to care for them",
+      "agreement": 34
+    },
+    {
+      "tvfyId": 127,
+      "policy": "the Australian Renewable Energy Agency (ARENA)",
+      "description": "the federal government should fund and maintain the Australian Renewable Energy Agency, or ARENA, as an independent body that manages the government's renewable energy programs",
+      "agreement": 34
+    },
+    {
+      "tvfyId": 251,
+      "policy": "increasing workplace protections",
+      "description": "the federal government should increase protections for workers by, for example, ensuring there are adequate dispute resolution processes available",
+      "agreement": 37
+    },
+    {
+      "tvfyId": 361,
+      "policy": "wiping all student debt (university and vocational)",
+      "description": "the federal government should wipe all student debt for Australians who have undertaken vocational or tertiary education in Australia",
+      "agreement": 37
+    },
+    {
+      "tvfyId": 265,
+      "policy": "a transition plan for coal workers",
+      "description": "the federal government should develop and implement a plan to transition workers in the coal industry to other industries",
+      "agreement": 38
+    },
+    {
+      "tvfyId": 317,
+      "policy": "ending indexation on student debt (vocational and tertiary)",
+      "description": "the federal government should stop indexing student debts from trade support loans and tertiary education HELP loans",
+      "agreement": 38
+    },
+    {
+      "tvfyId": 199,
+      "policy": "increasing political transparency",
+      "description": "the federal government should increase transparency requirements for political parties (for example, requiring full and prompt disclosure of any political donations on easy-to-search public websites)",
+      "agreement": 38
+    },
+    {
+      "tvfyId": 160,
+      "policy": "closing the gap between Indigenous and non-Indigenous Australians",
+      "description": "the federal government needs to make closing the gap between Aboriginal and Torres Strait Islanders and other Australians a priority",
+      "agreement": 39
+    },
+    {
+      "tvfyId": 249,
+      "policy": "assisting Australians trying to return from overseas",
+      "description": "the federal government should assist returning Australians stranded overseas due to COVID-19 by, for example, increasing the numbers of permitted arrivals under international flight caps and targetting price gauging so that return airline tickets are affordable",
+      "agreement": 41
+    },
+    {
+      "tvfyId": 149,
+      "policy": "reducing the corporate tax rate",
+      "description": "the federal government should reduce the corporate (or company) tax rate for all corporations (not just for small business)",
+      "agreement": 42
+    },
+    {
+      "tvfyId": 352,
+      "policy": "criminalising hate speech",
+      "description": "the federal government should make hate speech that calls for force or violence a criminal offense ",
+      "agreement": 47
+    },
+    {
+      "tvfyId": 178,
+      "policy": "expanding public funded dental care",
+      "description": "the federal government should expand public funded dental care",
+      "agreement": 50
+    },
+    {
+      "tvfyId": 128,
+      "policy": "protecting citizens' privacy",
+      "description": "the federal government should respect its citizens' right to privacy and make sure all sensitive information it does have access to (such as medical, census or tax data) is kept secure",
+      "agreement": 50
+    },
+    {
+      "tvfyId": 314,
+      "policy": "self-governance of the territories",
+      "description": "the federal government should not interfere in, nor intervene with, the governance of federal territories - such as the Australian Capital Territory (ACT) or the Northern Territory (NT) - and should allow those territories to create and uphold their own laws",
+      "agreement": 50
+    },
+    {
+      "tvfyId": 86,
+      "policy": "creating a federal Anti-Corruption Commission",
+      "description": "the federal government should create a national integrity commission similar to the NSW Independent Commission Against Corruption (ICAC) to detect, investigate and prevent corruption across all Commonwealth departments and agencies",
+      "agreement": 54
+    },
+    {
+      "tvfyId": 112,
+      "policy": "speeding things along in Parliament (procedural)",
+      "description": "Members of Parliament (MPs) and Senators should vote to speed things along by supporting motions to 'put the question' (known as 'closure' or 'gag' motions), which require Parliament to immediately vote on a question rather than debating it any further",
+      "agreement": 54
+    },
+    {
+      "tvfyId": 90,
+      "policy": "protecting whistleblowers",
+      "description": "the federal government should introduce legislation to protect people who disclose information for the benefit of the public interest and protect the journalists who report it",
+      "agreement": 56
+    },
+    {
+      "tvfyId": 113,
+      "policy": "suspending the rules to allow a vote to happen (procedural)",
+      "description": "Members of Parliament (MPs) and Senators should vote to suspend standing and sessional orders (that is, the procedural rules of Parliament) so that their colleagues can introduce motions for Parliament to vote on even when the the procedural rules would prevent them from doing so",
+      "agreement": 56
+    },
+    {
+      "tvfyId": 42,
+      "policy": "encouraging Australian-based industry",
+      "description": "the federal government should encourage Australian-based industry and secure the jobs these industries create by, for example, providing incentives for companies to stay in Australia (note that there are specific policies in respect to the timber, dairy, shipping, coal, and film & TV industries, which means that votes specific to those subjects are not included here)",
+      "agreement": 57
+    },
+    {
+      "tvfyId": 168,
+      "policy": "privatising certain government services",
+      "description": "the federal government should give the private sector control over running and managing some of its services (such as public welfare, aged care and visa services) by either outsourcing or privatisation",
+      "agreement": 57
+    },
+    {
+      "tvfyId": 156,
+      "policy": "increasing access to medicinal cannabis products",
+      "description": "the federal government should increase access to therapeutic cannabis for those with a medical need and prescription",
+      "agreement": 61
+    },
+    {
+      "tvfyId": 81,
+      "policy": "increasing transparency of big business by making information public",
+      "description": "the federal govenment should increase transparency in big business (that is, companies with an income equal or more than $100 million/year or, alternatively, $200 million/year) by making certain information public, including their total income and how much tax they paid",
+      "agreement": 61
+    },
+    {
+      "tvfyId": 276,
+      "policy": "putting welfare payments onto cashless debit cards (or indue cards) on an ongoing basis",
+      "description": "the federal government should extend the Cashless Debit Card (or Indue) program on an ongoing basis, meaning that they should continue to put a large proportion of a person's welfare payment onto a debit card that cannot be used for alcohol or gambling and cannot be used to make cash withdrawals (see the policy \"For putting welfare payments onto cashless debit cards (or indue cards) on a temporary basis as a trial\" for votes on the program's trial period)",
+      "agreement": 61
+    },
+    {
+      "tvfyId": 231,
+      "policy": "offshore oil mining",
+      "description": "the federal government should support offshore petroleum mining by, for example, granting exploration and drilling licences",
+      "agreement": 62
+    },
+    {
+      "tvfyId": 328,
+      "policy": "treating COVID vaccine status as a protected attribute",
+      "description": "the federal government should introduce anti-discrimination laws so that a person cannot be discriminated against on the basis of their COVID vaccine status",
+      "agreement": 63
+    },
+    {
+      "tvfyId": 45,
+      "policy": "increasing consumer protections",
+      "description": "the federal government should introduce legislation that increases consumer protections by, for example, encouraging competition",
+      "agreement": 64
+    },
+    {
+      "tvfyId": 92,
+      "policy": "stopping tax avoidance or aggressive tax minimisation",
+      "description": "the federal government should make it harder for individuals and corporations to avoid or aggressively minimise their Australian tax obligations and take part in international efforts to keep track of these individuals and corporations by sharing income and asset information",
+      "agreement": 64
+    },
+    {
+      "tvfyId": 187,
+      "policy": "targeting foreign interference in Australia",
+      "description": "the federal government should address the issue of foreign interference in Australia by, for example, introducing new offences against acts such as sabotage, treason and espionage",
+      "agreement": 64
+    },
+    {
+      "tvfyId": 59,
+      "policy": "increasing accessibility of government data and documents",
+      "description": "the federal government should make its data and documents more accessible for the general public and Parliament",
+      "agreement": 65
+    },
+    {
+      "tvfyId": 246,
+      "policy": "increasing the cost of humanities degrees",
+      "description": "the federal government should substantially increase the cost of humanities degrees at university (that is, degrees focussed on the study of human culture and society) in order to discourage students from enrolling in the the subject area and instead enrol in other subject areas, such as mathematics",
+      "agreement": 66
+    },
+    {
+      "tvfyId": 135,
+      "policy": "Preventative Detention Orders (PDOs)",
+      "description": "the police should be able to detain people without charge for a limited period if there is a threat of a terrorist attack or if it is likely that vital evidence will be lost after a terrorist attack takes place",
+      "agreement": 69
+    },
+    {
+      "tvfyId": 301,
+      "policy": "reducing taxes for middle-income earners",
+      "description": "the federal government should reduce income tax for middle-income earners (those who earn more than $80,000 per year)",
+      "agreement": 69
+    },
+    {
+      "tvfyId": 18,
+      "policy": "unconventional gas mining",
+      "description": "the federal government should allow companies to mine coal seam (CSG), tight and shale gas",
+      "agreement": 69
+    },
+    {
+      "tvfyId": 185,
+      "policy": "making more water from Murray-Darling Basin available to use",
+      "description": "the federal government should increase water allocations from the Murray-Darling Basin for farmers and other users",
+      "agreement": 71
+    },
+    {
+      "tvfyId": 189,
+      "policy": "a declared area offence",
+      "description": "the federal government should make it an offence to enter or remain in areas that have been listed as “declared areas” by the Minister for Foreign Affairs because of terrorist activity (such as the Mosul district in Iraq and Al-Raqqa Province in Syria)",
+      "agreement": 75
+    },
+    {
+      "tvfyId": 132,
+      "policy": "an Australian Building and Construction Commission (ABCC)",
+      "description": "there should be an Australian Building and Construction Commission (ABCC) to monitor workplace relations in the building and construction industry",
+      "agreement": 77
+    },
+    {
+      "tvfyId": 217,
+      "policy": "Australia's timber industry",
+      "description": "the federal government should protect Australia's logging industry and the jobs it represents",
+      "agreement": 78
+    },
+    {
+      "tvfyId": 70,
+      "policy": "increasing indexation of HECS-HELP debts",
+      "description": "the federal government should adjust how indexation rates of Higher Education Loan Programme (HELP) debts (also known as HECS-HELP debts) are quantified in order to make the system more sustainable",
+      "agreement": 79
+    },
+    {
+      "tvfyId": 238,
+      "policy": "mandatory minimum sentences for certain offences",
+      "description": "the federal government should include mandatory minimum sentences in their federal-level criminal laws that deal with crimes such as child sex offences",
+      "agreement": 80
+    },
+    {
+      "tvfyId": 192,
+      "policy": "stopping former ministers from taking lobbying positions within five years",
+      "description": "the federal government should tighten the ministerial code of conduct to stop former ministers from taking up lobbying positions - including in-house positions - within five years of leaving Parliament",
+      "agreement": 81
+    },
+    {
+      "tvfyId": 44,
+      "policy": "increasing surveillance powers",
+      "description": "the federal government should introduce legislation to increase the powers of intelligence and law enforcement agencies to intercept and retain communications related to persons of interest. These agencies include the Australian Security Intelligence Organisation (ASIO), Australian Secret Intelligence Service (ASIS) and the Australian Federal Police (AFP).",
+      "agreement": 83
+    },
+    {
+      "tvfyId": 136,
+      "policy": "increasing the passenger movement charge ('PMC')",
+      "description": "increase the tax imposed on passengers leaving Australia (which is collected by airlines and shipping companies when passengers purchase their ticket)",
+      "agreement": 83
+    },
+    {
+      "tvfyId": 147,
+      "policy": "changing the wording of section 18C of the Racial Discrimination Act",
+      "description": "the federal government should change section 18C of the Racial Discrimination Act so that the words \"insult\", \"offend\", \"humiliate\" are replaced with the word \"harass\"",
+      "agreement": 86
+    },
+    {
+      "tvfyId": 34,
+      "policy": "decreasing availability of welfare payments",
+      "description": "the federal government should limit the availability of government social security payments",
+      "agreement": 86
+    },
+    {
+      "tvfyId": 51,
+      "policy": "offshore processing for people seeking asylum in Australia",
+      "description": "people seeking asylum in Australia, who arrive without a visa and particularly those who arrive by boat, should be held offshore in an Australian territory like Christmas Island while their application is processed (See the policy \"For regional processing of asylum seekers\" for more on processing asylum claims in other countries, like Nauru)",
+      "agreement": 86
+    },
+    {
+      "tvfyId": 130,
+      "policy": "reducing taxes for high-income earners",
+      "description": "the federal government should reduce the amount of income tax that high-income earners (those who earn over $200,000 per year) must pay each year",
+      "agreement": 86
+    },
+    {
+      "tvfyId": 139,
+      "policy": "Continuing Detention Orders (CDOs)",
+      "description": "the federal government should introduce laws that allow people who have been convicted of certain terrorist offences to be kept in detention even after their custodial sentences have ended if there is an unacceptable risk that they will commit certain serious terrorism offences after being released",
+      "agreement": 88
+    },
+    {
+      "tvfyId": 175,
+      "policy": "civil celebrants having the right to refuse to marry same-sex couples",
+      "description": "the federal government should protect the right of celebrants to refuse to marry same-sex couples if doing so would be against their religious or conscientious beliefs",
+      "agreement": 88
+    },
+    {
+      "tvfyId": 203,
+      "policy": "political intervention in research funding grants",
+      "description": "the federal government should be able to intervene in the research grant process with the Australian Research Council (ARC) by, for example, vetoing certain grant application where considered appropriate",
+      "agreement": 88
+    },
+    {
+      "tvfyId": 32,
+      "policy": "live animal export",
+      "description": "the federal government should allow live animal export and place minimal restrictions on it",
+      "agreement": 89
+    },
+    {
+      "tvfyId": 201,
+      "policy": "MacMines' proposed China Stone coal mine in the Galilee Basin",
+      "description": "the federal government should support MacMines' plans to build the China Stone coal mine in Queensland's Galilee Basin",
+      "agreement": 92
+    },
+    {
+      "tvfyId": 46,
+      "policy": "increasing access under Freedom of Information law",
+      "description": "the federal government should amend freedom of information (FOI) legislation to increase public access to government data and documents",
+      "agreement": 92
+    },
+    {
+      "tvfyId": 105,
+      "policy": "increasing funding for legal aid",
+      "description": "the federal government should maintain or increase funding for the legal assistance sector (Legal Aid, community legal centres, etc.)",
+      "agreement": 92
+    },
+    {
+      "tvfyId": 114,
+      "policy": "letting all MPs or Senators speak in Parliament (procedural)",
+      "description": "Members of Parliament (MPs) and Senators should vote against all motions that stop an MP or Senator from speaking (that is, motions that the MP or Senator 'be no longer heard')",
+      "agreement": 92
+    },
+    {
+      "tvfyId": 109,
+      "policy": "putting welfare payments onto cashless debit cards (or indue cards) on a temporary basis as a trial",
+      "description": "the federal government should create a time-limited trial of putting a large proportion of a person's welfare payment onto a debit card that cannot be used for alcohol or gambling and cannot be used to make cash withdrawals (see the policy \"For putting welfare payments onto cashless debit cards (or indue cards) on an ongoing basis\" for votes on extending the program indefinitely)",
+      "agreement": 92
+    },
+    {
+      "tvfyId": 161,
+      "policy": "maintaining or increasing defence spending",
+      "description": "the federal government should keep up or increase the amount of money it spends on defence",
+      "agreement": 95
+    },
+    {
+      "tvfyId": 196,
+      "policy": "nuclear energy",
+      "description": "the federal government should support nuclear energy generation in Australia",
+      "agreement": 95
+    },
+    {
+      "tvfyId": 56,
+      "policy": "decreasing ABC and SBS funding",
+      "description": "the federal government should decrease funding for the Australian Broadcasting Corporation (ABC) and the Special Broadcasting Service (SBS)",
+      "agreement": 96
+    },
+    {
+      "tvfyId": 141,
+      "policy": "increasing investment in the coal industry",
+      "description": "the federal government should maintain or increase its investment in and support for the Australian coal industry",
+      "agreement": 96
+    },
+    {
+      "tvfyId": 16,
+      "policy": "regional processing of asylum seekers",
+      "description": "asylum seekers who arrive in Australia without a visa, particularly those who arrive by boat, should have their asylum claims processed regionally in a country such as the Republic of Nauru or Papua New Guinea (See the policy \"For offshore processing of asylum seekers\" for more on processing asylum seeker claims in Australian territories like Christmas Island)",
+      "agreement": 96
+    },
+    {
+      "tvfyId": 75,
+      "policy": "increasing transparency of the China-Australia relationship",
+      "description": "the Australian Government should provide more transparency of our country's political relationship with China",
+      "agreement": 97
+    },
+    {
+      "tvfyId": 162,
+      "policy": "Adani's proposed Carmichael coal mine in the Galilee Basin",
+      "description": "the federal government should support the Adani Group's plans to build the Carmichael mine in Queensland's Galilee Basin",
+      "agreement": 98
+    },
+    {
+      "tvfyId": 208,
+      "policy": "increasing government support for the dairy industry",
+      "description": "the federal government should increase their support of Australia's dairy industry by, for example, regulating increased milk prices",
+      "agreement": 99
+    },
+    {
+      "tvfyId": 220,
+      "policy": "Temporary Exclusion Orders",
+      "description": "the federal government should be able to prevent an Australian citizen aged 14 years or older who is overseas from returning to Australia for up to two years at a time for counter-terrorism reasons",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 202,
+      "policy": "a combined Federal Circuit and Family Court of Australia",
+      "description": "the federal government should unify the Federal Circuit Court of Australia and the Family Court of Australia so that they are one court  to be known as the Federal Circuit and Family Court of Australia",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 170,
+      "policy": "a review of our representatives' eligibility",
+      "description": "the federal government should conduct a review of our senators and members of parliament (MPs) to make sure that they are all eligible to represent us in Parliament under the Australian Constitution",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 129,
+      "policy": "a same-sex marriage plebiscite",
+      "description": "the federal government should hold a plebiscite (or national vote) on the question of whether the law should be changed to allow same-sex couples to marry",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 200,
+      "policy": "a travel ban on people from certain countries",
+      "description": "the federal government should introduce a travel ban on people from certain countries for national security reasons",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 226,
+      "policy": "an independent NDIS assessment process",
+      "description": "the federal government should introduce independent assessments for access and planning decisions for the National Disability Insurance Scheme (NDIS)",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 244,
+      "policy": "banning mobiles and other devices in immigration detention",
+      "description": "the federal government should give the Minister the power to prohibit items such as mobile phones, SIM cards and internet capable devices for people in immigration detention facilities",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 362,
+      "policy": "capping the indexation rates for HECS-HELP debts",
+      "description": "the federal government should cap the indexation rates for HECS-HELP debts to ensure students have certainty about the level of debt they will accrue",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 163,
+      "policy": "drug testing welfare recipients",
+      "description": "the federal government should introduce mandatory drug testing for people who receive certain welfare payments",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 146,
+      "policy": "getting rid of the Gold Travel Pass",
+      "description": "the federal government should get rid of the Gold Travel Pass, which gives free domestic air travel to certain former politicians, such as former Prime Ministers",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 154,
+      "policy": "giving approval for mining in the Liverpool Plains",
+      "description": "the federal government should give approval for new mines in the Liverpool Plains, such as the Shenhua Watermark coal mine",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 119,
+      "policy": "imprisoning immigration detention workers who record or reveal information from their work",
+      "description": "the federal government should make it an offence punishable by imprisonment for Immigration and Border Protection employees, consultants and contractors to record or disclose information that they obtained while working in Australia's immigration detention centres",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 38,
+      "policy": "increasing funding for road infrastructure",
+      "description": "the federal government should provide more funding for road infrastructure",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 239,
+      "policy": "increasing support for rural and regional Australia",
+      "description": "the federal government should increase its funding for initiatives that support rural and regional communities",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 138,
+      "policy": "increasing the initial tax rate for working holiday makers to 15%",
+      "description": "the federal government should increase the tax rate for working holiday visa holders so that they are taxed at a rate of 15% on every dollar earned up to $37,000",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 62,
+      "policy": "landholders' right to say no to mining and gas exploration",
+      "description": "landholders, particularly farmers, should be able to say no to mining and gas exploration on their land (in other words, they should be able to lock the gate)\r\n",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 331,
+      "policy": "placing the CFMEU into administration",
+      "description": "the federal government should put the Construction, Forestry and Maritime Employees Union (CFMEU) into administration",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 198,
+      "policy": "prioritising religious freedom",
+      "description": "the federal government should protect religious freedoms over other rights and freedoms (for example, by giving religious organisations the right to discriminate)",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 21,
+      "policy": "privatising government-owned assets",
+      "description": "the federal government should privatise government owned assets",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 204,
+      "policy": "protecting Australian sovereignty in trade agreements",
+      "description": "the federal government should ensure that Australian sovereignty always comes first when signing trade agreements so that the government can protect Australian interests (including its workforce and industries) without risking legal action from foreign investors under provisions such as investor-state dispute settlement (ISDS) clauses",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 55,
+      "policy": "requiring a warrant to access citizens’ telecommunications records",
+      "description": "staff of government agencies should need a warrant before being able to access the telecommunications records of citizens",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 320,
+      "policy": "revoking citizenship of dual nationals involved with terrorism offences by the courts",
+      "description": "the federal government should give the Minister for Home Affairs the power to apply to the courts to revoke the citizenship of people who have dual nationality (that is, are also citizens of another country) if they take part in certain terrorism-related offences [NOTE: this policy is related to an older policy titled \"Revoking citizenship of dual nationals involved with terrorism offences by the minister\"]",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 150,
+      "policy": "the Coalition's Youth Jobs PaTH",
+      "description": "the Government should introduced the Youth Jobs PaTH, a youth employment plan to assist up to 120,000 jobs seekers under 25 years which includes three phases three phases (skills training, voluntary internships and wage subsidies for businesses)",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 151,
+      "policy": "the Coalition's new schools funding policy (\"Gonski 2.0\")",
+      "description": "the federal government should implement the Coalition's new funding policy, proposed under Prime Minister Malcolm Turnbull and dubbed \"Gonski 2.0\", so that it replaces the previous Labor Government's Gonski agreements",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 190,
+      "policy": "the territories being able to legalise euthanasia",
+      "description": "the parliaments of the Northern Territory and the Australian Capital Territory should have the power to legalise euthanasia (also known as voluntary assisted dying)",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 2,
+      "policy": "tobacco plain packaging",
+      "description": "the federal government should introduce plain packaging for tobacco products",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 174,
+      "policy": "turning back asylum boats when possible",
+      "description": "the federal government should issue instructions for border protection forces to turn back boats carrying asylum seekers to Australia where it is safe to do so",
+      "agreement": 100
+    },
+    {
+      "tvfyId": 12,
+      "policy": "voluntary student union fees",
+      "description": "university students should be able to choose whether or not to pay student services and amenities fees (also called student union fees)",
+      "agreement": 100
+    }
+  ]
+}

@@ -195,17 +195,17 @@ export default function BookPage({ page }: { page: PageView }) {
           <div className={styles.tableColumn}>
             <div className={styles.tableHeading}>{page.heading}</div>
             <div className={styles.tableHead}>
-              <span>Bill or motion</span>
-              <span className={styles.alignRight}>Vote</span>
+              <span>Policy</span>
+              <span className={styles.alignRight}>In favour</span>
             </div>
             {page.votes.map((vote) => (
-              <div key={vote.bill} className={styles.tableRow}>
+              <div key={vote.tvfyId} className={styles.tableRow}>
                 <span className={styles.voteBill}>
-                  {vote.bill}
+                  {vote.policy}
                   <br />
-                  <span className={styles.voteYear}>{vote.year}</span>
+                  <span className={styles.voteYear}>Policy {vote.tvfyId}</span>
                 </span>
-                <span className={styles.voteValue}>{vote.vote}</span>
+                <span className={styles.voteValue}>{Math.round(vote.agreement)}%</span>
               </div>
             ))}
           </div>

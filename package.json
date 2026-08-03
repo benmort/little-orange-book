@@ -2,12 +2,13 @@
   "name": "little-orange-book",
   "version": "1.0.0",
   "private": true,
-  "description": "Quotations from Pauline Hanson — a page-turning pocket booklet, built with Next.js.",
+  "description": "Quotations from Pauline Hanson \u2014 a page-turning pocket booklet, built with Next.js.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "sync:hanson": "tsx scripts/sync-hanson.ts"
   },
   "dependencies": {
     "next": "16.2.12",
@@ -16,8 +17,11 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "@types/pg": "^8.20.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "pg": "^8.22.0",
+    "tsx": "^4.23.5",
     "typescript": "^5.9.3"
   }
 }

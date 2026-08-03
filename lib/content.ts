@@ -1,3 +1,5 @@
+import hansonData from "./hanson-data.json";
+
 /**
  * Content for "Quotations from Pauline Hanson".
  *
@@ -264,21 +266,52 @@ export const CHAPTERS: Chapter[] = [
   },
 ];
 
+/* ── The voting record ──────────────────────────────────────────────────────
+   Real, unlike the quotations. lib/hanson-data.json is a committed snapshot of
+   the uprise `civic` schema, which is synced from They Vote For You; regenerate
+   it with `npm run sync:hanson`. Every row below is a policy she has actually
+   voted on, and every one carries its TVFY policy id so it can be checked.   */
+
 export interface VoteRow {
-  bill: string;
-  year: string;
-  vote: string;
+  /** They Vote For You policy id — the citation. */
+  tvfyId: number;
+  policy: string;
+  /** Share of relevant divisions where she voted in favour, 0–100. */
+  agreement: number;
 }
 
-export const VOTES: VoteRow[] = [
-  { bill: "Bill title to be confirmed — penalty rates", year: "20XX", vote: "Against" },
-  { bill: "Bill title to be confirmed — casual conversion", year: "20XX", vote: "Against" },
-  { bill: "Bill title to be confirmed — same job same pay", year: "20XX", vote: "Against" },
-  { bill: "Bill title to be confirmed — superannuation guarantee", year: "20XX", vote: "Against" },
-  { bill: "Bill title to be confirmed — right of entry", year: "20XX", vote: "Against" },
-  { bill: "Bill title to be confirmed — minimum wage submission", year: "20XX", vote: "Opposed" },
-  { bill: "Bill title to be confirmed — industrial manslaughter", year: "20XX", vote: "Against" },
+/** The member, straight from the snapshot. */
+export const MEMBER = hansonData.politician;
+export const RECORD_SOURCE = hansonData.source;
+export const RECORD_SOURCE_URL = hansonData.sourceUrl;
+
+/** Every policy she has cast a vote on, worst agreement first. */
+export const ALL_POSITIONS: VoteRow[] = hansonData.positions.flatMap((p) =>
+  typeof p.agreement === "number"
+    ? [{ tvfyId: p.tvfyId, policy: p.policy, agreement: p.agreement }]
+    : [],
+);
+
+/**
+ * The rows that print. Chosen editorially — one or two per chapter theme,
+ * picked for how squarely they sit on the booklet's subjects — rather than by
+ * score, so the appendix cannot be accused of cherry-picking extremes. Listed
+ * by TVFY policy id so the selection is auditable; anything missing from a
+ * fresh snapshot is skipped rather than silently replaced.
+ */
+const APPENDIX_POLICY_IDS = [
+  148, // getting rid of Sunday and public holiday penalty rates
+  6, // increasing trade unions' powers in the workplace
+  72, // decreasing the gender pay gap
+  24, // increasing Aboriginal land rights
+  309, // implementing the Uluru Statement from the Heart in full
+  56, // decreasing ABC and SBS funding
+  68, // increasing the diversity of media ownership
 ];
+
+export const VOTES: VoteRow[] = APPENDIX_POLICY_IDS.map((id) =>
+  ALL_POSITIONS.find((p) => p.tvfyId === id),
+).filter((row): row is VoteRow => row !== undefined);
 
 export type PageType =
   | "cover"
@@ -364,7 +397,7 @@ function buildPages(): Page[] {
   pages.push({
     type: "table",
     heading: "The voting record",
-    note: "Placeholder rows. Final table to be sourced from Senate divisions and They Vote For You.",
+    note: `Per cent of relevant divisions in which she voted in favour. Source: ${RECORD_SOURCE}; policy numbers are theirs. She has attended ${MEMBER.votesAttended?.toLocaleString()} of ${MEMBER.votesPossible?.toLocaleString()} divisions.`,
   });
 
   pages.push({

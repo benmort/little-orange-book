@@ -377,7 +377,7 @@
 }
 .tableHead {
   display: grid;
-  grid-template-columns: 1fr 60px;
+  grid-template-columns: 1fr 68px;
   gap: 8px;
   padding-bottom: 6px;
   border-bottom: 3px solid #000;
@@ -388,9 +388,9 @@
 }
 .tableRow {
   display: grid;
-  grid-template-columns: 1fr 60px;
+  grid-template-columns: 1fr 68px;
   gap: 8px;
-  padding: 6px 0;
+  padding: 5px 0;
   border-bottom: 1px solid #ccc;
   align-items: start;
 }
