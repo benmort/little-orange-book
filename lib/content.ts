@@ -522,20 +522,31 @@ function buildPages(): Page[] {
       body: chapter.body,
     });
 
-    /* Real quotations take the chapter's slots first; whatever is left over
-       keeps its placeholder, and its tag. */
+    /* A chapter runs as many quotation leaves as it has sourced quotations —
+       one at least. Where nothing has been sourced yet it keeps a single
+       placeholder rather than three, so an unfinished chapter looks unfinished
+       once instead of three times. */
     const verified = VERIFIED_BY_CHAPTER[chapter.short] ?? [];
-    chapter.quotes.forEach((placeholder, slot) => {
-      const real = verified[slot];
+    const quotes =
+      verified.length > 0
+        ? verified.map((q) => ({ quote: q.text, cite: q.cite, placeholder: false }))
+        : [{ quote: chapter.quotes[0].quote, cite: chapter.quotes[0].cite, placeholder: true }];
+
+    quotes.forEach((q) => {
       pages.push({
         type: "quote",
         short: chapter.short,
         kicker: chapter.short,
-        quote: real ? real.text : placeholder.quote,
-        cite: real ? real.cite : placeholder.cite,
-        placeholder: !real,
+        quote: q.quote,
+        cite: q.cite,
+        placeholder: q.placeholder,
       });
     });
+
+    /* The opener plus its quotations has to come to an even number of leaves,
+       or the next chapter opens on a verso. Chapters used to be four pages
+       each, which made this automatic; variable-length ones do not. */
+    if ((1 + quotes.length) % 2 === 1) pages.push({ type: "blank" });
   });
 
   /* The record is a section of the book, not an appendix bolted to the end, so

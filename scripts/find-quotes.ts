@@ -52,7 +52,7 @@ const CHAPTER_PHRASES: Record<string, string[]> = {
   Unions: ["trade union", "union officials", "right of entry"],
   "Job Security": ["casual workers", "labour hire", "job security"],
   Dismissal: ["unfair dismissal", "sack workers"],
-  Safety: ["workplace safety", "industrial manslaughter", "silicosis"],
+  Safety: ["work health and safety", "asbestos", "workers compensation"],
   Super: ["superannuation guarantee", "superannuation"],
   Race: ["multiculturalism", "immigration levels", "swamped"],
   "First Nations": ["native title", "Uluru Statement", "Welcome to Country"],
@@ -76,6 +76,26 @@ function apiKey(): string {
 }
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * Their servers drop a request now and then, and a run is several hundred of
+ * them. Without this one blip ends the harvest — which is exactly what happened
+ * the first time it was run across all thirteen chapters.
+ */
+async function fetchWithRetry(url: string, attempts = 3): Promise<Response | null> {
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const response = await fetch(url, { headers: { "user-agent": UA } });
+      if (response.ok) return response;
+      // 4xx will not improve on a retry; 5xx might.
+      if (response.status < 500) return null;
+    } catch {
+      // Network-level failure — worth another go.
+    }
+    if (attempt < attempts) await sleep(DELAY_MS * attempt * 2);
+  }
+  return null;
+}
 const strip = (html: string) =>
   html
     .replace(/<[^>]+>/g, " ")
@@ -90,10 +110,8 @@ const strip = (html: string) =>
 /** Website search — the API's own search endpoint is broken for the Senate. */
 async function findGids(phrase: string): Promise<string[]> {
   const query = encodeURIComponent(`speaker:${PERSON_ID} "${phrase}"`);
-  const response = await fetch(`https://www.openaustralia.org.au/search/?s=${query}`, {
-    headers: { "user-agent": UA },
-  });
-  if (!response.ok) return [];
+  const response = await fetchWithRetry(`https://www.openaustralia.org.au/search/?s=${query}`);
+  if (!response) return [];
   const html = await response.text();
   const ids = [...html.matchAll(/href="\/senate\/\?id=([\d\-.]+)/g)].map((m) => m[1]);
   return [...new Set(ids)];
@@ -111,8 +129,8 @@ interface Candidate {
 
 async function fetchSpeech(gid: string, key: string) {
   const url = `https://www.openaustralia.org.au/api/getDebates?type=senate&gid=${gid}&output=js&key=${key}`;
-  const response = await fetch(url, { headers: { "user-agent": UA } });
-  if (!response.ok) return null;
+  const response = await fetchWithRetry(url);
+  if (!response) return null;
 
   const rows = (await response.json()) as Array<Record<string, unknown>>;
   for (const row of rows) {
@@ -139,9 +157,44 @@ async function main() {
   );
   if (chapters.length === 0) throw new Error(`No chapter matches "${only}".`);
 
-  const candidates: Candidate[] = [];
-  const seen = new Set<string>();
+  /* Merge rather than overwrite. Running one chapter used to wipe the other
+     twelve, which is a bad way to find out you have thrown a harvest away. */
+  let candidates: Candidate[] = [];
+  try {
+    const existing = JSON.parse(readFileSync(OUT, "utf8")) as { candidates?: Candidate[] };
+    const touched = new Set(chapters.map(([name]) => name));
+    candidates = (existing.candidates ?? []).filter((c) => !touched.has(c.chapter));
+  } catch {
+    // No previous harvest, or an unreadable one. Start clean.
+  }
+  const seen = new Set<string>(candidates.map((c) => c.gid));
   let dropped = 0;
+
+  /* Written on the way out whatever happens. A harvest is several hundred
+     requests; losing all of it to the last one is not acceptable. */
+  const save = () => {
+    candidates.sort((a, b) => a.chapter.localeCompare(b.chapter) || b.date.localeCompare(a.date));
+    mkdirSync(dirname(OUT), { recursive: true });
+    writeFileSync(
+      OUT,
+      `${JSON.stringify(
+        {
+          source: "OpenAustralia.org.au (Australian Hansard)",
+          personId: PERSON_ID,
+          note: "Candidates only. Read each in context before quoting; trim fairly and keep the date.",
+          coverage:
+            "Her current Senate term, from 2016-07-01. Nothing earlier, and nothing said outside parliament.",
+          candidates,
+        },
+        null,
+        2,
+      )}\n`,
+    );
+  };
+  process.on("SIGINT", () => {
+    save();
+    process.exit(130);
+  });
 
   for (const [chapter, phrases] of chapters) {
     for (const phrase of phrases) {
@@ -173,24 +226,10 @@ async function main() {
       }
       console.log(`  ${chapter} · "${phrase}": ${gids.length} results`);
     }
+    save();
   }
 
-  candidates.sort((a, b) => a.chapter.localeCompare(b.chapter) || b.date.localeCompare(a.date));
-  mkdirSync(dirname(OUT), { recursive: true });
-  writeFileSync(
-    OUT,
-    `${JSON.stringify(
-      {
-        source: "OpenAustralia.org.au (Australian Hansard)",
-        personId: PERSON_ID,
-        note: "Candidates only. Read each in context before quoting; trim fairly and keep the date.",
-        coverage: "Her current Senate term, from 2016-07-01. Nothing earlier, and nothing said outside parliament.",
-        candidates,
-      },
-      null,
-      2,
-    )}\n`,
-  );
+  save();
 
   console.log(
     `\nWrote ${OUT}\n  ${candidates.length} candidates across ${new Set(candidates.map((c) => c.chapter)).size} chapters` +
