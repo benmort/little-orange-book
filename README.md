@@ -382,6 +382,28 @@ Three decisions worth knowing:
 That white box *is* the quiet zone. A QR printed hard against another colour loses its margin and
 scanners stop finding the corners.
 
+### Before it opens
+
+`ContentWarning` shows once, on a first visit, and remembers in `localStorage`. The booklet's whole
+method is to reproduce what was said rather than paraphrase it, and some of what it reproduces is
+racist — saying so before someone opens it costs the work nothing, and a reader who knows what they
+are looking at reads it as criticism.
+
+It renders nothing on the server: whether it has been seen lives in `localStorage`, and guessing at
+that during SSR would mismatch on hydration. It therefore appears a moment after the page, which is
+the right way round — late beats never.
+
+Two details that are not decoration. It swallows arrow and space keys in the capture phase, because
+the reader listens on the window and would otherwise turn pages behind the warning, dropping the
+reader somewhere they never chose. And it carries `screenonly`: a fixed overlay otherwise lays a
+dark panel across every printed leaf, which took the PDF from 342 kB to 3.5 MB.
+
+### The book's shadow
+
+The `drop-shadow` on the book row follows the leaves' own silhouette, which reads as light from the
+front but leaves the book floating on flat black. A pool of shade on the stage underneath sits it
+down on something. It is sized off the open halves, so it draws in as a cover closes.
+
 ### The aside
 
 Two lists, each on a single line, opening on hover into the gutter beside the aside rather than

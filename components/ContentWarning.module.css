@@ -1,0 +1,67 @@
+/* Sits over the reader, opaque enough that the book is not readable behind it —
+   a warning you can read past is not a warning. */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgba(5, 5, 10, 0.94);
+}
+
+.panel {
+  width: min(440px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border-radius: 18px;
+  border: 2px solid #ff5a00;
+  background: #0e0e11;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+
+.kicker {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #ff5a00;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 27px;
+  line-height: 1.08;
+  letter-spacing: 0;
+  color: #f2f2ea;
+}
+
+.body {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.62;
+  color: #b3b3b3;
+}
+
+.accept {
+  margin-top: var(--space-2);
+  padding: 11px 18px;
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #000;
+  background: #ff5a00;
+  border: 1px solid #ff5a00;
+  border-radius: 999px;
+}
+.accept:hover {
+  background: #fff;
+  border-color: #fff;
+}

@@ -547,6 +547,26 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
   const rowLeft = (bookW - openW) / 2;
   const spineX = rowLeft + (leftOpen ? PAGE_W : 0);
 
+  /* A pool of shade on the stage under the book. The drop-shadow on the row
+     follows the leaves' own silhouette, which reads as light from the front but
+     leaves the book floating on flat black; this is the contact shadow that
+     sits it down on something. Sized off the open halves so it draws in as a
+     cover closes, and kept behind everything in tree order. */
+  const groundShadowStyle: CSSProperties = {
+    position: "absolute",
+    left: "50%",
+    bottom: Math.round(-16 * scale),
+    width: Math.round(openW * scale * 0.94),
+    height: Math.round(58 * scale),
+    transform: "translateX(-50%)",
+    borderRadius: "50%",
+    pointerEvents: "none",
+    background:
+      "radial-gradient(50% 50% at 50% 50%, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.28) 45%, rgba(0,0,0,0) 72%)",
+    filter: `blur(${Math.max(6, Math.round(12 * scale))}px)`,
+    transition: `width ${SLIDE}, height 320ms ease, bottom 320ms ease`,
+  };
+
   /* The gutter is a valley between two leaves, so it has no business existing
      until there are two. It tracks the spine, and widens out of a hairline as
      the book unfurls, on the same timing as the halves — rather than switching
@@ -846,6 +866,7 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
       <div className={styles.layout}>
         <div className={styles.column}>
           <div style={stageStyle}>
+            <div style={groundShadowStyle} aria-hidden="true" />
             <div style={bookRowStyle}>
               {/* Behind the leaves, so the blocks read as what the pages sit on. */}
               <div style={blockStyle("left")} />
