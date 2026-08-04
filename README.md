@@ -24,8 +24,47 @@ npx vercel --prod # production
 ```
 
 or push the repo and import it at [vercel.com/new](https://vercel.com/new). Vercel detects
-Next.js, runs `next build`, serves `/` from the edge cache and the cover portrait through the
-image optimiser. There is nothing to set — no environment variables, no database, no API routes.
+Next.js, runs `next build`, and serves `/` from the edge cache. No database — the voting record is
+a committed snapshot. The one variable to set is `SITE_PASSWORD`, below.
+
+## The password gate
+
+The booklet is unlaunched, so it sits behind one shared password — the same mechanism and the same
+`SITE_PASSWORD` as the No Room for Racism site, so one password covers both.
+
+```bash
+echo 'SITE_PASSWORD=<the shared password>' >> .env.local   # git-ignored
+```
+
+and set the same variable in the Vercel project. **This repository is public: the password must
+never be committed.** `.env.example` ships it empty on purpose.
+
+**The gate is opt-in.** `SITE_PASSWORD` set turns it on; unset means the site is public, which is
+how it ships at launch — you open the booklet by deleting one environment variable, not by editing
+code. The trade-off is real: a typo in the variable name on Vercel leaves the site readable rather
+than shut. It is accepted because failing closed would take the *public* campaign site down at
+exactly the moment it matters most.
+
+How it works:
+
+- `middleware.ts` runs in front of every request, rewrites anything unauthenticated onto `/enter`,
+  and answers `/api/*` with a 401 JSON body rather than a page a `fetch` would choke on. A rewrite,
+  not a redirect — the address bar keeps the URL asked for, so signing in and reloading lands you
+  where you were going, and there is no `?next=` parameter to validate and therefore no
+  open-redirect surface.
+- The session cookie is signed with a key derived from `SITE_PASSWORD` itself, so there is no
+  second secret to manage and rotating the password invalidates every live session for free. The
+  cookie carries an HMAC over an expiry and a nonce — never the password.
+- The password compare is constant-time over SHA-256 digests, so neither the timing nor the loop
+  count leaks the password's content or its length.
+- `/enter` overrides `openGraph` and `twitter`, not just `title`. The root layout's social metadata
+  names the subject of the booklet and Next inherits it into every route, which would have put
+  "Quotations from Pauline Hanson" into the one page a stranger is allowed to read — and into the
+  link preview of anyone who shared the gate.
+
+Middleware means requests are no longer purely static edge cache hits. With `SITE_PASSWORD` unset
+the work is one environment read and a pass-through, and `middleware.ts` can be deleted outright
+once the gate is retired.
 
 ### Custom domain: littleorangebook.com.au
 
