@@ -349,14 +349,14 @@ conferences, radio and television interviews and media releases that many placeh
 
 ## Content
 
-`lib/quotations.json` holds the quotations that have been sourced — twelve so far, across seven of
-the thirteen chapters. There are no placeholders in the booklet: what is in it is sourced, and what
+`lib/quotations.json` holds the quotations that have been sourced — six so far, across three of the
+thirteen chapters. There are no placeholders in the booklet: what is in it is sourced, and what
 is not sourced is not in it.
 
 **Only chapters with something sourced appear, and each runs as many quotation leaves as it has.**
 A chapter whose quotations were all still placeholders would be an opener leading nowhere, and a
 booklet whose promise is that every quotation is checkable should not print the ones that are not
-yet. Six of the thirteen are out on that rule today; they stay in `CHAPTERS` as the brief for what
+yet. Ten of the thirteen are out on that rule today; they stay in `CHAPTERS` as the brief for what
 to look for, and return to the book — renumbered automatically — the moment `quotations.json`
 carries one for them.
 

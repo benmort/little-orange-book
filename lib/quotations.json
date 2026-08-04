@@ -35,39 +35,6 @@
       "verification": "Reproduced by australianpolitics.com as the Hansard transcript, and corroborated independently. Not yet read against ParlInfo directly."
     },
     {
-      "id": "1996-fed-up-inequalities",
-      "chapter": "On First Nations",
-      "text": "I am fed up to the back teeth with the inequalities that are being promoted by the government and paid for by the taxpayer.",
-      "occasion": "First speech, House of Representatives",
-      "date": "1996-09-10",
-      "cite": "House of Representatives Hansard, 10 September 1996",
-      "sourceType": "hansard",
-      "url": "https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;query=Id:%22chamber/hansards/16daad94-5c74-4641-a730-7f6d74312148/0140%22",
-      "verification": "Reproduced by australianpolitics.com as the Hansard transcript. Not yet read against ParlInfo directly."
-    },
-    {
-      "id": "1996-housing-loans",
-      "chapter": "On First Nations",
-      "text": "I have done research on benefits available only to Aboriginals and challenge anyone to tell me how Aboriginals are disadvantaged when they can obtain three and five per cent housing loans denied to non-Aboriginals.",
-      "occasion": "First speech, House of Representatives",
-      "date": "1996-09-10",
-      "cite": "House of Representatives Hansard, 10 September 1996",
-      "sourceType": "hansard",
-      "url": "https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;query=Id:%22chamber/hansards/16daad94-5c74-4641-a730-7f6d74312148/0140%22",
-      "verification": "Reproduced by australianpolitics.com as the Hansard transcript. Not yet read against ParlInfo directly."
-    },
-    {
-      "id": "2017-penalty-rates-support",
-      "chapter": "On Wages",
-      "text": "I have heard, from people coming through my office, that the Australian people do not want the penalty rates cut. I will support what the people want. Over 75 per cent do not want the penalty rates cut, and I support that.",
-      "occasion": "Senate debate",
-      "date": "2017-03-28",
-      "cite": "Senate Hansard, 28 March 2017",
-      "sourceType": "hansard",
-      "url": "https://www.openaustralia.org.au/senate/?id=2017-03-28.126.1",
-      "verification": "Pulled verbatim from OpenAustralia's Hansard record by npm run quotes, and checked for the phrase before being kept."
-    },
-    {
       "id": "2024-immigration-i-was-right",
       "chapter": "On Race",
       "text": "I was right about immigration and multiculturalism in 1996. Everything I warned about has come to pass. I'm right today.",
@@ -76,17 +43,6 @@
       "cite": "Senate Hansard, 19 November 2024",
       "sourceType": "hansard",
       "url": "https://www.openaustralia.org.au/senate/?id=2024-11-19.160.3",
-      "verification": "Pulled verbatim from OpenAustralia's Hansard record by npm run quotes and checked for the phrase before being kept."
-    },
-    {
-      "id": "2026-special-rights-for-none",
-      "chapter": "On First Nations",
-      "text": "Help will be given on the basis of genuine need, not race. No more special privileges \u2014 equal rights for all, and special rights for none. There will be no more taxpayer-funded welcome to country rituals.",
-      "occasion": "Senate debate",
-      "date": "2026-05-14",
-      "cite": "Senate Hansard, 14 May 2026",
-      "sourceType": "hansard",
-      "url": "https://www.openaustralia.org.au/senate/?id=2026-05-14.191.1",
       "verification": "Pulled verbatim from OpenAustralia's Hansard record by npm run quotes and checked for the phrase before being kept."
     },
     {
@@ -101,17 +57,6 @@
       "verification": "Pulled verbatim from OpenAustralia's Hansard record by npm run quotes and checked for the phrase before being kept."
     },
     {
-      "id": "2026-net-zero-grocery-prices",
-      "chapter": "On Energy",
-      "text": "That the Senate notes that grocery prices have skyrocketed due to net-zero policies, energy costs, foreign corporate land ownership and massive regulatory costs faced by farmers dealing with red, green, black and blue tape.",
-      "occasion": "Motion moved in the Senate",
-      "date": "2026-07-02",
-      "cite": "Senate Hansard, 2 July 2026",
-      "sourceType": "hansard",
-      "url": "https://www.openaustralia.org.au/senate/?id=2026-07-02.211.3",
-      "verification": "Pulled verbatim from OpenAustralia's Hansard record by npm run quotes. It is the text of a motion she moved, not a speech \u2014 the citation says so."
-    },
-    {
       "id": "2024-refuse-covid-vaccinations",
       "chapter": "On Health",
       "text": "I rise to speak to One Nation's legislation to end the pandemic of discrimination against Australians who stood for the right to refuse COVID-19 vaccinations.",
@@ -120,17 +65,6 @@
       "cite": "Senate Hansard, 14 August 2024",
       "sourceType": "hansard",
       "url": "https://www.openaustralia.org.au/senate/?id=2024-08-14.3.3",
-      "verification": "Pulled verbatim from OpenAustralia's Hansard record by npm run quotes and checked for the phrase before being kept."
-    },
-    {
-      "id": "2023-trial-by-media",
-      "chapter": "On the Press",
-      "text": "Shamefully, we are now witnessing another trial by media as journalists publish the claims of a Toowoomba woman now accusing Mr Lehrmann of sexual assault.",
-      "occasion": "Senate debate",
-      "date": "2023-11-08",
-      "cite": "Senate Hansard, 8 November 2023",
-      "sourceType": "hansard",
-      "url": "https://www.openaustralia.org.au/senate/?id=2023-11-08.108.2",
       "verification": "Pulled verbatim from OpenAustralia's Hansard record by npm run quotes and checked for the phrase before being kept."
     }
   ]
