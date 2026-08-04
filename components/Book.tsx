@@ -424,8 +424,7 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
     flex: "none",
     overflow: "hidden",
     transformStyle: "preserve-3d",
-    transition: `width ${SLIDE}, opacity 300ms ease`,
-    opacity: leftOpen ? 1 : 0,
+    transition: `width ${SLIDE}`,
     width: leftOpen ? PAGE_W : 0,
   };
 
@@ -445,8 +444,6 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
     position: "absolute",
     inset: 0,
     overflow: "hidden",
-    transition: "opacity 300ms ease",
-    opacity: rightOpen ? 1 : 0,
   };
 
   const rightPaperStyle: CSSProperties = {
@@ -548,13 +545,24 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
     return layers.join(",");
   };
 
+  /* Hinged at the spine and collapsed to nothing when its half is shut, in step
+     with the slot it sits under. A block that kept its full width and merely
+     faded would be a page-sized panel behind a half-open book — which is what a
+     closing cover used to slide across. There is no ground behind the book. */
   const blockStyle = (side: "left" | "right"): CSSProperties => {
-    const open = side === "left" ? leftOpen : rightOpen;
+    /* Keyed to whether that half actually holds a page, not to whether the
+       layout has opened for one. Opening the front cover widens the left half
+       before the cover has landed in it, and a block that followed the layout
+       would put a slab of paper on the table under a cover still in the air.
+       Nothing is lost at either end: the block is a fraction of a sheet thick
+       on the first spread and on the last, so it has nothing to pop from. */
+    const open = side === "left" ? left !== null : right !== null;
+    const width = open ? PAGE_W : 0;
     return {
       position: "absolute",
       top: 0,
-      left: side === "left" ? rowLeft : spineX,
-      width: PAGE_W,
+      left: side === "left" ? spineX - width : spineX,
+      width,
       height: PAGE_H,
       // Tree order puts these behind the slots, which sit at z-index auto.
       zIndex: 0,
@@ -562,8 +570,7 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
       background: "#f6f5f1",
       borderRadius: side === "left" ? "14px 4px 4px 14px" : "4px 14px 14px 4px",
       boxShadow: blockShadow(open ? depth[side] : 0, side === "left" ? -1 : 1),
-      transition: `left ${SLIDE}, box-shadow ${SLIDE}, opacity 300ms ease`,
-      opacity: open ? 1 : 0,
+      transition: `left ${SLIDE}, width ${SLIDE}, box-shadow ${SLIDE}`,
     };
   };
 
@@ -730,26 +737,36 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
               <div style={blockStyle("left")} />
               <div style={blockStyle("right")} />
 
+              {/* No page, no paper. Opening the front cover widens this half
+                  before there is anything to put in it, and a blank leaf would
+                  paint a white panel sliding out from the spine — a sheet that
+                  does not exist in a book you are only just opening. The leaf's
+                  own back face is what lands here, and it carries the same
+                  page, so nothing pops when it does. */}
               <div style={leftSlotStyle}>
-                <div className={styles.leftLeaf}>
-                  <div className={styles.leafInner}>
-                    <div style={leftPaperStyle}>
-                      <BookPage page={decorate(left)} />
-                      <div style={leftShadeStyle} />
-                      <div className={styles.leftGloss} />
+                {left && (
+                  <div className={styles.leftLeaf}>
+                    <div className={styles.leafInner}>
+                      <div style={leftPaperStyle}>
+                        <BookPage page={decorate(left)} />
+                        <div style={leftShadeStyle} />
+                        <div className={styles.leftGloss} />
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <div style={rightSlotStyle}>
-                <div style={rightClipStyle}>
-                  <div style={rightPaperStyle}>
-                    <BookPage page={decorate(right)} />
-                    <div style={rightShadeStyle} />
-                    <div className={styles.rightGloss} />
+                {right && (
+                  <div style={rightClipStyle}>
+                    <div style={rightPaperStyle}>
+                      <BookPage page={decorate(right)} />
+                      <div style={rightShadeStyle} />
+                      <div className={styles.rightGloss} />
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {!!turning && (
                   <>

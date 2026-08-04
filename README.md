@@ -240,6 +240,13 @@ The blocks are siblings of the two slots rather than children, because the left 
 overflow to collapse and would cut the block off at the spine. They rely on tree order to sit
 behind the pages: an explicit `z-index` above `auto` puts them in front of the leaves instead.
 
+Each block is hinged at the spine and keyed to whether its half actually *holds a page*, not to
+whether the layout has opened for one — those two differ for the length of a cover turn, since the
+geometry runs ahead. A block that followed the layout would put a slab of paper on the table under
+a cover still in the air. Nothing is lost by waiting: the block is a fraction of a sheet thick on
+the first spread and on the last, so it has nothing to pop from. For the same reason neither half
+paints paper for a null page — there is no ground behind the book, and it sits flat on the stage.
+
 Below 860 px the spread collapses to a single page; the aside drops beneath the book. The reading
 position is remembered in `localStorage` under `lob-page`.
 
