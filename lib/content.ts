@@ -515,7 +515,17 @@ function buildPages(): Page[] {
   // chapter runs exactly four pages, so does every chapter after it.
   pages.push({ type: "blank" });
 
-  CHAPTERS.forEach((chapter, index) => {
+  /* Only chapters with something sourced appear. A chapter whose quotations are
+     all still placeholders would be an opener leading nowhere, and a booklet
+     whose promise is that every quotation is checkable should not print the
+     ones that are not yet. The unsourced chapters stay in CHAPTERS as the brief
+     for what to look for — they return to the book the moment lib/quotations.json
+     carries one, and the numbering closes up behind them meanwhile. */
+  const sourcedChapters = CHAPTERS.filter(
+    (chapter) => (VERIFIED_BY_CHAPTER[chapter.short] ?? []).length > 0,
+  );
+
+  sourcedChapters.forEach((chapter, index) => {
     pages.push({
       type: "chapter",
       n: index + 1,
@@ -524,22 +534,13 @@ function buildPages(): Page[] {
       body: chapter.body,
     });
 
-    /* A chapter runs as many quotation leaves as it has sourced quotations —
-       one at least. Where nothing has been sourced yet it keeps a single
-       placeholder rather than three, so an unfinished chapter looks unfinished
-       once instead of three times. */
-    const verified = VERIFIED_BY_CHAPTER[chapter.short] ?? [];
-    const quotes =
-      verified.length > 0
-        ? verified.map((q) => ({ quote: q.text, cite: q.cite, placeholder: false, id: q.id }))
-        : [
-            {
-              quote: chapter.quotes[0].quote,
-              cite: chapter.quotes[0].cite,
-              placeholder: true,
-              id: undefined as string | undefined,
-            },
-          ];
+    /* A chapter runs as many quotation leaves as it has sourced quotations. */
+    const quotes = (VERIFIED_BY_CHAPTER[chapter.short] ?? []).map((q) => ({
+      quote: q.text,
+      cite: q.cite,
+      placeholder: false,
+      id: q.id,
+    }));
 
     quotes.forEach((q) => {
       pages.push({

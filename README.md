@@ -349,14 +349,19 @@ conferences, radio and television interviews and media releases that many placeh
 
 ## Content
 
-`lib/quotations.json` holds the quotations that have been sourced — twelve so far, across eight of
-the thirteen chapters.
+`lib/quotations.json` holds the quotations that have been sourced — twelve so far, across seven of
+the thirteen chapters. There are no placeholders in the booklet: what is in it is sourced, and what
+is not sourced is not in it.
 
-**A chapter runs as many quotation leaves as it has sourced quotations, one at least.** Where
-nothing has been sourced it keeps a single placeholder rather than three, so an unfinished chapter
-looks unfinished once instead of three times. Chapters used to be four leaves each, which kept
-every opener on a recto automatically; variable-length ones do not, so a blank is added whenever
-the opener plus its quotations comes to an odd number. Each carries its occasion, date, citation, a link to the record,
+**Only chapters with something sourced appear, and each runs as many quotation leaves as it has.**
+A chapter whose quotations were all still placeholders would be an opener leading nowhere, and a
+booklet whose promise is that every quotation is checkable should not print the ones that are not
+yet. Six of the thirteen are out on that rule today; they stay in `CHAPTERS` as the brief for what
+to look for, and return to the book — renumbered automatically — the moment `quotations.json`
+carries one for them.
+
+Chapters used to be four leaves each, which kept every opener on a recto for free. Variable-length
+ones do not, so a blank is added whenever the opener plus its quotations comes to an odd number. Each carries its occasion, date, citation, a link to the record,
 and a `verification` field saying how it was checked, which is not printed: it is there so the last
 Hansard read before a print run is a known task rather than an assumption. Verified quotations take
 a chapter's slots in order; whatever is left keeps its placeholder.
