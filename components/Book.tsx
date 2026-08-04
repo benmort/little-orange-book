@@ -4,7 +4,7 @@ import { useCallback, useEffect, useReducer, useRef } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 
 import { bookConfig, type BookConfig } from "@/lib/config";
-import { CHAPTER_STARTS, PAGES, VOTES, type Page } from "@/lib/content";
+import { CHAPTER_STARTS, PAGES, type Page } from "@/lib/content";
 import BookPage, { BLANK_PAGE, type PageView } from "./BookPage";
 import styles from "./Book.module.css";
 
@@ -305,7 +305,9 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
         campaignLabel: config.campaignLabel,
         campaignUrl: config.campaignUrl,
         disclaimer: config.disclaimer,
-        votes: VOTES,
+        band: p.band,
+        rows: p.rows ?? [],
+        continued: !!p.continued,
         tableNote: p.note,
         toc: CHAPTER_STARTS.map(({ page, index }) => ({
           n: page.n ?? 0,

@@ -293,25 +293,91 @@ export const ALL_POSITIONS: VoteRow[] = hansonData.positions.flatMap((p) =>
 );
 
 /**
- * The rows that print. Chosen editorially — one or two per chapter theme,
- * picked for how squarely they sit on the booklet's subjects — rather than by
- * score, so the appendix cannot be accused of cherry-picking extremes. Listed
- * by TVFY policy id so the selection is auditable; anything missing from a
- * fresh snapshot is skipped rather than silently replaced.
+ * The bands the record is grouped into. These are They Vote For You's own
+ * scale — the seven buckets the schema's `category` column exists to hold. The
+ * sync does not populate that column (it is null for all 28,313 rows in the
+ * table, not just hers), so the band is computed from the percentage instead.
+ * The percentage prints on every row either way, so nothing rests on where
+ * exactly the lines fall.
  */
-const APPENDIX_POLICY_IDS = [
-  148, // getting rid of Sunday and public holiday penalty rates
-  6, // increasing trade unions' powers in the workplace
-  72, // decreasing the gender pay gap
-  24, // increasing Aboriginal land rights
-  309, // implementing the Uluru Statement from the Heart in full
-  56, // decreasing ABC and SBS funding
-  68, // increasing the diversity of media ownership
+const BANDS: Array<{ label: string; from: number }> = [
+  { label: "Voted very strongly for", from: 95 },
+  { label: "Voted strongly for", from: 85 },
+  { label: "Voted moderately for", from: 60 },
+  { label: "Voted a mixture of for and against", from: 40 },
+  { label: "Voted moderately against", from: 15 },
+  { label: "Voted strongly against", from: 5 },
+  { label: "Voted very strongly against", from: 0 },
 ];
 
-export const VOTES: VoteRow[] = APPENDIX_POLICY_IDS.map((id) =>
-  ALL_POSITIONS.find((p) => p.tvfyId === id),
-).filter((row): row is VoteRow => row !== undefined);
+export function bandFor(agreement: number): string {
+  return (BANDS.find((b) => agreement >= b.from) ?? BANDS[BANDS.length - 1]).label;
+}
+
+/* Rows are laid out on a fixed 380 × 570 leaf, so they have to be packed by
+   height rather than counted: a 99-character policy name takes three lines and
+   a short one takes one. These are the measured costs of the row styles. */
+const ROW_CHARS_PER_LINE = 46;
+const ROW_LINE_H = 15;
+/** Policy-number line, the row's own padding and rule, and the column's gap. */
+const ROW_CHROME_H = 32;
+const PAGE_BODY_H = 392; // the leaf less its header, band heading and footer
+const CONTINUED_BODY_H = 444; // a continuation leaf carries no band heading
+
+function rowHeight(row: VoteRow): number {
+  const lines = Math.max(1, Math.ceil(row.policy.length / ROW_CHARS_PER_LINE));
+  return lines * ROW_LINE_H + ROW_CHROME_H;
+}
+
+export interface RecordPage {
+  band: string;
+  rows: VoteRow[];
+  /** False on the first leaf of a band, so only that one carries the heading. */
+  continued: boolean;
+}
+
+/**
+ * Every policy she has voted on, grouped by band and packed onto as many leaves
+ * as it takes. Each band starts on a fresh leaf so the reader can always see
+ * which one they are in.
+ */
+export const RECORD_PAGES: RecordPage[] = BANDS.flatMap(({ label }) => {
+  const rows = ALL_POSITIONS.filter((p) => bandFor(p.agreement) === label).sort(
+    (a, b) => b.agreement - a.agreement || a.policy.localeCompare(b.policy),
+  );
+  if (rows.length === 0) return [];
+
+  const pages: RecordPage[] = [];
+  let current: VoteRow[] = [];
+  let used = 0;
+  for (const row of rows) {
+    const budget = pages.length === 0 ? PAGE_BODY_H : CONTINUED_BODY_H;
+    const h = rowHeight(row);
+    if (current.length > 0 && used + h > budget) {
+      pages.push({ band: label, rows: current, continued: pages.length > 0 });
+      current = [];
+      used = 0;
+    }
+    current.push(row);
+    used += h;
+  }
+  if (current.length > 0) pages.push({ band: label, rows: current, continued: pages.length > 0 });
+
+  /* A band that ends on one or two stranded rows reads as a mistake. Pour the
+     last two leaves back together and halve them — both halves are comfortably
+     under budget, since the fuller of the two already fitted on its own. */
+  if (pages.length > 1 && pages[pages.length - 1].rows.length < 3) {
+    const tail = [...pages[pages.length - 2].rows, ...pages[pages.length - 1].rows];
+    const split = Math.ceil(tail.length / 2);
+    pages.splice(pages.length - 2, 2, {
+      band: label,
+      rows: tail.slice(0, split),
+      continued: pages.length > 2,
+    });
+    pages.push({ band: label, rows: tail.slice(split), continued: true });
+  }
+  return pages;
+});
 
 export type PageType =
   | "cover"
@@ -339,6 +405,10 @@ export interface Page {
   cite?: string;
   placeholder?: boolean;
   note?: string;
+  /** Voting-record leaves only. */
+  band?: string;
+  rows?: VoteRow[];
+  continued?: boolean;
 }
 
 /**
@@ -394,10 +464,19 @@ function buildPages(): Page[] {
     });
   });
 
-  pages.push({
-    type: "table",
-    heading: "The voting record",
-    note: `Per cent of relevant divisions in which she voted in favour. Source: ${RECORD_SOURCE}; policy numbers are theirs. She has attended ${MEMBER.votesAttended?.toLocaleString()} of ${MEMBER.votesPossible?.toLocaleString()} divisions.`,
+  RECORD_PAGES.forEach((page, n) => {
+    pages.push({
+      type: "table",
+      // Only the opening leaf carries the section title.
+      heading: n === 0 ? "The voting record" : undefined,
+      band: page.band,
+      rows: page.rows,
+      continued: page.continued,
+      note:
+        n === RECORD_PAGES.length - 1
+          ? `Per cent of relevant divisions in which she voted in favour, and the band that falls in. Source: ${RECORD_SOURCE}; policy numbers are theirs. She has attended ${MEMBER.votesAttended?.toLocaleString()} of ${MEMBER.votesPossible?.toLocaleString()} divisions.`
+          : undefined,
+    });
   });
 
   pages.push({
@@ -414,6 +493,9 @@ function buildPages(): Page[] {
      book closed from the back. The trailing blank exists only to give that leaf
      a recto to occupy; the reader never shows it. */
   pages.push({ type: "blank" }); // inside the back cover
+  // The record runs to however many leaves the data needs, so the parity here
+  // is not fixed: pad until the back cover lands on a verso.
+  if (pages.length % 2 === 0) pages.push({ type: "blank" });
   pages.push({ type: "back" });
   pages.push({ type: "blank" });
 
@@ -430,10 +512,11 @@ export const CHAPTER_STARTS: Array<{ page: Page; index: number }> = PAGES.map((p
 
 /** The pages that make it into the 105 × 148 mm print booklet. */
 export const PRINT_PAGES = PAGES.filter(
-  (p) => p.type === "quote" || p.type === "text" || p.type === "chapter",
+  (p) => p.type === "quote" || p.type === "text" || p.type === "chapter" || p.type === "table",
 ).map((p) => ({
-  kicker: p.kicker || `Chapter ${p.n ?? ""}`,
+  kicker: p.type === "table" ? p.band ?? "Appendix" : p.kicker || `Chapter ${p.n ?? ""}`,
   heading: p.type === "quote" ? p.quote ?? "" : p.heading ?? "",
   body: p.type === "quote" ? "" : p.body ?? "",
-  cite: p.cite ?? "",
+  cite: p.cite ?? p.note ?? "",
+  rows: p.rows ?? [],
 }));

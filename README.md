@@ -71,7 +71,7 @@ components/
   CoverPortrait.tsx    Cover still, then the morph over the top  (client)
   PrintBook.tsx        The paper edition, hidden on screen  (server)
 lib/
-  content.ts           Chapters, quotations, voting record; builds the 63-page sequence
+  content.ts           Chapters, quotations, voting record; builds the 89-page sequence
   config.ts            Cover colour, campaign details, disclaimer
 public/
   hanson-portrait.webp Cover still, transparent ground
@@ -202,8 +202,8 @@ position is remembered in `localStorage` under `lob-page`.
 
 ### Printing
 
-`Cmd/Ctrl-P` swaps the reader out for `PrintBook` and sets the sheet to 105 × 148 mm — 55 pages,
-one quotation per leaf, the citation at the foot. Chrome and Safari honour `@page size`; give it
+`Cmd/Ctrl-P` swaps the reader out for `PrintBook` and sets the sheet to 105 × 148 mm — 82 pages,
+one quotation per leaf and the full voting record after them, each row citing its policy number. Chrome and Safari honour `@page size`; give it
 "Print backgrounds" off and no scaling.
 
 ## Content
@@ -232,14 +232,20 @@ trade unions' powers in the workplace: 25%" means she voted against it four time
 "decreasing ABC and SBS funding: 96%" means she voted for it. The page states the measure rather
 than bucketing it into for/against, and prints each policy's TVFY number so any row can be checked.
 
-Which rows print is an editorial choice, not a ranking: `APPENDIX_POLICY_IDS` in `lib/content.ts`
-lists them by TVFY policy id, one or two per chapter theme, so the appendix cannot be accused of
-sweeping the record for its most extreme numbers. Seven fit the page. `ALL_POSITIONS` exposes the
-full 184 if you want a longer table.
+The record runs in full: all 184 policies across 27 leaves, grouped into the seven bands of TVFY's
+own scale, each band starting on a fresh leaf and continuing across as many as it needs. Nothing is
+selected, ranked or trimmed — the whole record is in the book.
 
-One caveat carried over from the source: the schema has a `category` column (TVFY's
-for3…against3 bucket) that the sync does not populate — it is null for all 28,313 rows, not just
-Hanson's — so nothing here depends on it.
+**The bands are computed, not read.** The schema has a `category` column that exists to hold
+exactly these buckets, but the sync leaves it null — for all 28,313 rows in the table, not just
+hers — and there is no other grouping anywhere in the `civic` schema (it holds four tables:
+`Politician`, `Policy`, `PolicyPosition`, `CivicSyncRun`). So `bandFor()` derives the band from the
+percentage. The percentage prints on every row regardless, so nothing rests on exactly where the
+lines fall; move them in `BANDS` if you disagree with them.
+
+Rows are packed by measured height rather than counted, because a 99-character policy name takes
+three lines and a short one takes one. A band that would end on one or two stranded rows has its
+last two leaves poured together and halved, so no band trails off into an almost-empty page.
 
 `lib/config.ts` also carries the cover colour (the design shipped four — see `COVER_COLORS`), the
 campaign label and URL on the back cover, and the disclaimer.
@@ -266,8 +272,9 @@ footer line; the disclaimer still shows in the reader's aside, and the QR block 
 anywhere. Put them back if the printed booklet needs them.
 
 Small additions: the layout stacks below 860 px rather than overflowing sideways, contents rows
-and jump chips are real buttons, and Space is left alone when it is about to activate a focused
-control.
+and jump chips are real buttons, Space is left alone when it is about to activate a focused
+control, and the leaves are `user-select: none` — dragging a page has to turn it, not sweep a
+selection across the type. The aside stays selectable.
 
 `npm audit` reports advisories in `postcss` and `sharp`. Both are transitive build-time
 dependencies of Next 16; the only fix npm offers is downgrading Next to 9.x, so they stand.

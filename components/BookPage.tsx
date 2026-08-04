@@ -41,7 +41,10 @@ export interface PageView {
   campaignLabel: string;
   campaignUrl: string;
   disclaimer: string;
-  votes: VoteRow[];
+  /** Voting-record leaves. */
+  band?: string;
+  rows: VoteRow[];
+  continued: boolean;
   tableNote?: string;
   toc: TocEntry[];
 }
@@ -61,7 +64,8 @@ export const BLANK_PAGE: PageView = {
   campaignLabel: "",
   campaignUrl: "",
   disclaimer: "",
-  votes: [],
+  rows: [],
+  continued: false,
   toc: [],
 };
 
@@ -190,26 +194,30 @@ export default function BookPage({ page }: { page: PageView }) {
       {page.isTable && (
         <div className={styles.table}>
           <div className={styles.tableHeader} style={accent}>
-            Appendix
+            {page.continued ? `${page.band} — continued` : "Appendix"}
           </div>
           <div className={styles.tableColumn}>
-            <div className={styles.tableHeading}>{page.heading}</div>
+            {page.heading && <div className={styles.tableHeading}>{page.heading}</div>}
+            {!page.continued && <div className={styles.tableBand}>{page.band}</div>}
             <div className={styles.tableHead}>
               <span>Policy</span>
               <span className={styles.alignRight}>In favour</span>
             </div>
-            {page.votes.map((vote) => (
-              <div key={vote.tvfyId} className={styles.tableRow}>
+            {page.rows.map((row) => (
+              <div key={row.tvfyId} className={styles.tableRow}>
                 <span className={styles.voteBill}>
-                  {vote.policy}
+                  {row.policy}
                   <br />
-                  <span className={styles.voteYear}>Policy {vote.tvfyId}</span>
+                  <span className={styles.voteYear}>Policy {row.tvfyId}</span>
                 </span>
-                <span className={styles.voteValue}>{Math.round(vote.agreement)}%</span>
+                <span className={styles.voteValue}>{Math.round(row.agreement)}%</span>
               </div>
             ))}
           </div>
-          <div className={styles.tableNote}>{page.tableNote}</div>
+          <div className={styles.tableFooter}>
+            {page.tableNote && <div className={styles.tableNote}>{page.tableNote}</div>}
+            <div className={styles.tableFolio}>{page.folio}</div>
+          </div>
         </div>
       )}
 
