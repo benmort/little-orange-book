@@ -276,9 +276,14 @@ export interface VoteRow {
   /** They Vote For You policy id — the citation. */
   tvfyId: number;
   policy: string;
+  /** The source's own one-line statement of what the policy is. */
+  description: string;
   /** Share of relevant divisions where she voted in favour, 0–100. */
   agreement: number;
 }
+
+/** Policy names arrive from the source in sentence case with no initial cap. */
+const capitalise = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 
 /** The member, straight from the snapshot. */
 export const MEMBER = hansonData.politician;
@@ -288,7 +293,14 @@ export const RECORD_SOURCE_URL = hansonData.sourceUrl;
 /** Every policy she has cast a vote on, worst agreement first. */
 export const ALL_POSITIONS: VoteRow[] = hansonData.positions.flatMap((p) =>
   typeof p.agreement === "number"
-    ? [{ tvfyId: p.tvfyId, policy: p.policy, agreement: p.agreement }]
+    ? [
+        {
+          tvfyId: p.tvfyId,
+          policy: capitalise(p.policy),
+          description: capitalise(p.description ?? ""),
+          agreement: p.agreement,
+        },
+      ]
     : [],
 );
 
@@ -300,15 +312,34 @@ export const ALL_POSITIONS: VoteRow[] = hansonData.positions.flatMap((p) =>
  * The percentage prints on every row either way, so nothing rests on where
  * exactly the lines fall.
  */
-const BANDS: Array<{ label: string; from: number }> = [
-  { label: "Voted very strongly for", from: 95 },
-  { label: "Voted strongly for", from: 85 },
-  { label: "Voted moderately for", from: 60 },
-  { label: "Voted a mixture of for and against", from: 40 },
-  { label: "Voted moderately against", from: 15 },
-  { label: "Voted strongly against", from: 5 },
-  { label: "Voted very strongly against", from: 0 },
+const BANDS: Array<{ label: string; short: string; from: number }> = [
+  { label: "Voted very strongly for", short: "Very strongly for", from: 95 },
+  { label: "Voted strongly for", short: "Strongly for", from: 85 },
+  { label: "Voted moderately for", short: "Moderately for", from: 60 },
+  { label: "Voted a mixture of for and against", short: "Mixed", from: 40 },
+  { label: "Voted moderately against", short: "Moderately against", from: 15 },
+  { label: "Voted strongly against", short: "Strongly against", from: 5 },
+  { label: "Voted very strongly against", short: "Very strongly against", from: 0 },
 ];
+
+/**
+ * A coarser read than the seven bands, for the figure itself: did she vote for
+ * this, against it, or neither. The arrow carries the same information as the
+ * colour, so the cue does not rest on colour alone.
+ */
+export type Verdict = "for" | "mixed" | "against";
+
+export function verdictFor(agreement: number): Verdict {
+  if (agreement >= 66) return "for";
+  if (agreement >= 33) return "mixed";
+  return "against";
+}
+
+export const VERDICT_GLYPH: Record<Verdict, string> = {
+  for: "\u2191",
+  mixed: "\u2013",
+  against: "\u2193",
+};
 
 export function bandFor(agreement: number): string {
   return (BANDS.find((b) => agreement >= b.from) ?? BANDS[BANDS.length - 1]).label;
@@ -321,8 +352,9 @@ const ROW_CHARS_PER_LINE = 46;
 const ROW_LINE_H = 15;
 /** Policy-number line, the row's own padding and rule, and the column's gap. */
 const ROW_CHROME_H = 32;
-const PAGE_BODY_H = 392; // the leaf less its header, band heading and footer
-const CONTINUED_BODY_H = 444; // a continuation leaf carries no band heading
+/* Every leaf carries the band heading, continuations included, so they all
+   have the same chrome and the same budget. */
+const PAGE_BODY_H = 392;
 
 function rowHeight(row: VoteRow): number {
   const lines = Math.max(1, Math.ceil(row.policy.length / ROW_CHARS_PER_LINE));
@@ -351,7 +383,7 @@ export const RECORD_PAGES: RecordPage[] = BANDS.flatMap(({ label }) => {
   let current: VoteRow[] = [];
   let used = 0;
   for (const row of rows) {
-    const budget = pages.length === 0 ? PAGE_BODY_H : CONTINUED_BODY_H;
+    const budget = PAGE_BODY_H;
     const h = rowHeight(row);
     if (current.length > 0 && used + h > budget) {
       pages.push({ band: label, rows: current, continued: pages.length > 0 });
@@ -402,6 +434,7 @@ export interface Page {
   heading?: string;
   body?: string;
   body2?: string;
+  body3?: string;
   quote?: string;
   cite?: string;
   placeholder?: boolean;
@@ -431,6 +464,12 @@ function buildPages(): Page[] {
     body: "This is a pocket record of things one senator has said, in public, on the record. Nothing here is paraphrased. Each quotation carries its source so you can check it yourself.",
     body2:
       "It exists because a person who says she speaks for working people has spent three decades saying otherwise whenever the subject was wages, safety, security or the right to organise.",
+    /* Described, not quoted. Both speeches are matters of public record and the
+       chapter on race cites them by date, but this page carries no Placeholder
+       tag — so nothing on it is set in quotation marks unless it has been
+       checked. The three figures come from the committed snapshot. */
+    body3:
+      "Race is the throughline. Her first speech to the House of Representatives in 1996 and her first speech to the Senate twenty years later made the same warning about immigration, naming a different people each time. The votes read the same way: 100 per cent in favour of turning back asylum boats, 6 per cent for increasing Aboriginal land rights, nought for implementing the Uluru Statement from the Heart in full.",
   });
 
   pages.push({
@@ -526,6 +565,22 @@ export const CHAPTER_STARTS: Array<{ page: Page; index: number }> = PAGES.map((p
   page,
   index,
 })).filter((entry) => entry.page.type === "chapter" || entry.page.type === "section");
+
+/** Which leaf each policy is printed on, so the aside can send you to it. */
+export const POLICY_PAGE = new Map<number, number>(
+  PAGES.flatMap((page, index) => (page.rows ?? []).map((row) => [row.tvfyId, index] as const)),
+);
+
+/**
+ * The shape of the record in seven lines, for the reader's aside — how many
+ * policies fall in each band, and where that band starts in the book.
+ */
+export const BAND_SUMMARY = BANDS.map(({ label, short }) => ({
+  label,
+  short,
+  count: ALL_POSITIONS.filter((p) => bandFor(p.agreement) === label).length,
+  index: PAGES.findIndex((p) => p.type === "table" && p.band === label),
+})).filter((band) => band.count > 0 && band.index >= 0);
 
 /** The pages that make it into the 105 × 148 mm print booklet. */
 export const PRINT_PAGES = PAGES.filter(

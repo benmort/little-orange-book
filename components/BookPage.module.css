@@ -52,10 +52,26 @@
   border: 2px solid #000;
   pointer-events: none;
 }
+/* The design's own treatment, back on now that the media has no ground of its
+   own to fight with: greyscale and hard contrast, multiplied into the cover so
+   the ink reads as part of the stock rather than a photograph laid on top. */
 .portrait {
   position: relative;
   width: 182px;
   height: 202px;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  filter: grayscale(1) contrast(3.2) brightness(1.05);
+  mix-blend-mode: multiply;
+}
+/* Playing, it comes up in full colour — that is the point of asking for it. */
+.portraitPlaying {
+  filter: none;
+  mix-blend-mode: normal;
+  cursor: default;
 }
 .portrait img {
   width: 100%;
@@ -408,10 +424,29 @@
   color: #666;
 }
 .voteValue {
-  text-align: right;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 3px;
   font-family: var(--font-heading);
   font-size: 10.5px;
   text-transform: uppercase;
+}
+/* Weighted for white stock: a literal yellow is unreadable on paper, so the
+   middle band is a dark amber. The arrow says the same thing as the colour. */
+.voteFor {
+  color: #1a7f37;
+}
+.voteMixed {
+  color: #9a6a00;
+}
+.voteAgainst {
+  color: #b3261e;
+}
+.voteArrow {
+  font-family: var(--font-body);
+  font-size: 10px;
+  line-height: 1;
 }
 .alignRight {
   text-align: right;
@@ -431,6 +466,13 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+.tableBandCont {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #666;
 }
 .tableFolio {
   font-size: 9.5px;

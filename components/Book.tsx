@@ -1,10 +1,22 @@
 "use client";
 
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 
 import { bookConfig, type BookConfig } from "@/lib/config";
-import { CHAPTER_STARTS, PAGES, type Page } from "@/lib/content";
+import {
+  ALL_POSITIONS,
+  bandFor,
+  BAND_SUMMARY,
+  CHAPTER_STARTS,
+  PAGES,
+  POLICY_PAGE,
+  RECORD_SOURCE,
+  type Page,
+  VERDICT_GLYPH,
+  verdictFor,
+  type VoteRow,
+} from "@/lib/content";
 import BookPage, { BLANK_PAGE, type PageView } from "./BookPage";
 import styles from "./Book.module.css";
 
@@ -97,7 +109,8 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
   const [, forceRender] = useReducer((n: number) => n + 1, 0);
   const setState = useCallback(
     (patch: Partial<BookState> | ((s: BookState) => Partial<BookState>)) => {
-      const next = typeof patch === "function" ? patch(stateRef.current) : patch;
+      const next =
+        typeof patch === "function" ? patch(stateRef.current) : patch;
       stateRef.current = { ...stateRef.current, ...next };
       forceRender();
     },
@@ -110,11 +123,19 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
   const commitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const settleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const seqRef = useRef(0);
-  const dragRef = useRef<{ dir: number; x0: number; w: number; moved: boolean } | null>(null);
+  const dragRef = useRef<{
+    dir: number;
+    x0: number;
+    w: number;
+    moved: boolean;
+  } | null>(null);
   const moveHandler = useRef<((e: PointerEvent) => void) | null>(null);
   const upHandler = useRef<(() => void) | null>(null);
   /** Latest render scale, so a drag can translate pixels into leaf progress. */
   const scaleRef = useRef(1);
+  /** The policy whose detail panel is open, if any. */
+  const [openPolicy, setOpenPolicy] = useState<VoteRow | null>(null);
+  const [query, setQuery] = useState("");
 
   /** Turn one leaf (single) or one spread (two-up) in `dir`. */
   const turn = useCallback(
@@ -134,9 +155,13 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
 
       // Turns fired in quick succession get progressively snappier.
       const now = Date.now();
-      streak.current = now - lastTurnAt.current < 700 ? Math.min(streak.current + 1, 7) : 0;
+      streak.current =
+        now - lastTurnAt.current < 700 ? Math.min(streak.current + 1, 7) : 0;
       lastTurnAt.current = now;
-      const dur = Math.max(150, Math.round(BASE_DURATION / (1 + streak.current * 0.62)));
+      const dur = Math.max(
+        150,
+        Math.round(BASE_DURATION / (1 + streak.current * 0.62)),
+      );
 
       if (commitTimer.current) clearTimeout(commitTimer.current);
       seqRef.current += 1;
@@ -179,8 +204,19 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
       const t = nextIndex(s, dir);
       if (t === null) return;
 
-      dragRef.current = { dir, x0: e.clientX, w: PAGE_W * (scaleRef.current || 1), moved: false };
-      setState({ turning: dir, target: t, drag: true, p: dir > 0 ? 0 : 1, settle: null });
+      dragRef.current = {
+        dir,
+        x0: e.clientX,
+        w: PAGE_W * (scaleRef.current || 1),
+        moved: false,
+      };
+      setState({
+        turning: dir,
+        target: t,
+        drag: true,
+        p: dir > 0 ? 0 : 1,
+        settle: null,
+      });
 
       const onMove = (ev: PointerEvent) => {
         const d = dragRef.current;
@@ -241,7 +277,9 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
       // Leave Space alone when it is about to activate a focused control.
-      const onControl = !!target?.closest?.("button, a, input, textarea, select");
+      const onControl = !!target?.closest?.(
+        "button, a, input, textarea, select",
+      );
       if (e.key === "ArrowRight" || (e.key === " " && !onControl)) {
         e.preventDefault();
         turn(1);
@@ -269,8 +307,10 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
     return () => {
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", onResize);
-      if (moveHandler.current) window.removeEventListener("pointermove", moveHandler.current);
-      if (upHandler.current) window.removeEventListener("pointerup", upHandler.current);
+      if (moveHandler.current)
+        window.removeEventListener("pointermove", moveHandler.current);
+      if (upHandler.current)
+        window.removeEventListener("pointerup", upHandler.current);
       if (commitTimer.current) clearTimeout(commitTimer.current);
       if (settleTimer.current) clearTimeout(settleTimer.current);
     };
@@ -279,7 +319,8 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
   /** Flatten a page into everything a leaf needs to draw itself. */
   const decorate = useCallback(
     (p: Page | null): PageView => {
-      if (!p || p.type === "blank") return { ...BLANK_PAGE, coverColor: config.coverColor };
+      if (!p || p.type === "blank")
+        return { ...BLANK_PAGE, coverColor: config.coverColor };
       const long = (p.quote ?? "").length > 150;
       return {
         isBlank: false,
@@ -296,6 +337,7 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
         heading: p.heading,
         body: p.body,
         body2: p.body2,
+        body3: p.body3,
         kicker: p.kicker,
         quote: p.quote,
         cite: p.cite,
@@ -328,7 +370,8 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
   const { immersive, turning, target } = state;
   const spread = isSpread(state);
   const fwd = turning > 0;
-  const at = (n: number): Page | null => (n >= 0 && n < PAGES.length ? PAGES[n] : null);
+  const at = (n: number): Page | null =>
+    n >= 0 && n < PAGES.length ? PAGES[n] : null;
 
   // Which page sits in each of the four slots: the two flat halves, and the
   // two faces of the leaf mid-flight.
@@ -383,8 +426,14 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
   const availW = state.vw - 48 - (immersive || !state.wide ? 0 : ASIDE_W);
   const barH = immersive ? 78 : 0;
   const scale = immersive
-    ? Math.max(0.4, Math.min(1.6, (state.vh - 96 - barH) / PAGE_H, (state.vw - 60) / bookW))
-    : Math.max(0.4, Math.min(1, (state.vh - 72 - barH) / PAGE_H, availW / bookW));
+    ? Math.max(
+        0.4,
+        Math.min(1.6, (state.vh - 96 - barH) / PAGE_H, (state.vw - 60) / bookW),
+      )
+    : Math.max(
+        0.4,
+        Math.min(1, (state.vh - 72 - barH) / PAGE_H, availW / bookW),
+      );
   scaleRef.current = scale;
 
   /* The stage reserves the whole row, spread width included, even while the
@@ -411,7 +460,8 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
     transform: `scale(${scale})`,
     transformOrigin: "top left",
     transition: "transform 320ms cubic-bezier(.2,.7,.3,1)",
-    filter: "drop-shadow(0 26px 44px rgba(0,0,0,0.55)) drop-shadow(0 3px 6px rgba(0,0,0,0.4))",
+    filter:
+      "drop-shadow(0 26px 44px rgba(0,0,0,0.55)) drop-shadow(0 3px 6px rgba(0,0,0,0.4))",
   };
 
   const SLIDE = "420ms cubic-bezier(.2,.7,.3,1)";
@@ -472,7 +522,9 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
     pointerEvents: "none",
     transition: "background 320ms ease",
     background: `linear-gradient(90deg,rgba(0,0,0,0.10) 0%,rgba(0,0,0,0) ${
-      twoUp ? "9%,rgba(0,0,0,0) 82%,rgba(0,0,0,0.14) 97%,rgba(0,0,0,0.34)" : "12%,rgba(0,0,0,0) 88%,rgba(0,0,0,0.10)"
+      twoUp
+        ? "9%,rgba(0,0,0,0) 82%,rgba(0,0,0,0.14) 97%,rgba(0,0,0,0.34)"
+        : "12%,rgba(0,0,0,0) 88%,rgba(0,0,0,0.10)"
     } 100%)`,
   };
 
@@ -527,7 +579,10 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
   const BLOCK_LAYERS = 16;
   const BLOCK_DEPTH = 17;
   const readFrac = Math.min(1, Math.max(0, geom / lastIndex));
-  const depth = { left: BLOCK_DEPTH * readFrac, right: BLOCK_DEPTH * (1 - readFrac) };
+  const depth = {
+    left: BLOCK_DEPTH * readFrac,
+    right: BLOCK_DEPTH * (1 - readFrac),
+  };
 
   const blockShadow = (thickness: number, out: 1 | -1) => {
     const step = thickness / BLOCK_LAYERS;
@@ -539,7 +594,9 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
       layers.push(`${x}px ${y}px 0 ${n % 2 ? "#cfcdc7" : "#f6f5f1"}`);
     }
     // Grounds the whole block rather than each sheet.
-    layers.push(`${(thickness * out).toFixed(2)}px ${(thickness * 0.5 + 2).toFixed(2)}px 6px rgba(0,0,0,0.34)`);
+    layers.push(
+      `${(thickness * out).toFixed(2)}px ${(thickness * 0.5 + 2).toFixed(2)}px 6px rgba(0,0,0,0.34)`,
+    );
     return layers.join(",");
   };
 
@@ -593,10 +650,17 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
     leafStyle.transform = `rotateY(${(-180 * end).toFixed(2)}deg)`;
     leafStyle.transition = `transform ${settle === "commit" ? 380 : 300}ms cubic-bezier(.22,.7,.3,1)`;
   } else {
-    const name = fwd ? (alt ? "leafFwdB" : "leafFwd") : alt ? "leafBwdB" : "leafBwd";
+    const name = fwd
+      ? alt
+        ? "leafFwdB"
+        : "leafFwd"
+      : alt
+        ? "leafBwdB"
+        : "leafBwd";
     // Single-page mode has nothing behind the leaf, so it fades as it goes.
     leafStyle.animation =
-      `${name}${anim}` + (twoUp ? "" : `, ${fwd ? "leafFadeOut" : "leafFadeIn"}${lin}`);
+      `${name}${anim}` +
+      (twoUp ? "" : `, ${fwd ? "leafFadeOut" : "leafFadeIn"}${lin}`);
   }
 
   const leafFrontStyle: CSSProperties = {
@@ -619,10 +683,13 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
     position: "absolute",
     inset: 0,
     pointerEvents: "none",
-    background: "linear-gradient(90deg,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.5) 45%,rgba(0,0,0,0.22) 100%)",
+    background:
+      "linear-gradient(90deg,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.5) 45%,rgba(0,0,0,0.22) 100%)",
     ...(live
       ? {
-          opacity: Number((0.44 * Math.sin(Math.PI * Math.min(prog, 0.999))).toFixed(3)),
+          opacity: Number(
+            (0.44 * Math.sin(Math.PI * Math.min(prog, 0.999))).toFixed(3),
+          ),
           transition: "opacity 260ms linear",
         }
       : { opacity: 0, animation: `frontShade${lin}` }),
@@ -632,9 +699,13 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
     position: "absolute",
     inset: 0,
     pointerEvents: "none",
-    background: "linear-gradient(90deg,rgba(0,0,0,0.22) 0%,rgba(0,0,0,0.5) 55%,rgba(0,0,0,0.9) 100%)",
+    background:
+      "linear-gradient(90deg,rgba(0,0,0,0.22) 0%,rgba(0,0,0,0.5) 55%,rgba(0,0,0,0.9) 100%)",
     ...(live
-      ? { opacity: Number((0.5 * (1 - prog)).toFixed(3)), transition: "opacity 260ms linear" }
+      ? {
+          opacity: Number((0.5 * (1 - prog)).toFixed(3)),
+          transition: "opacity 260ms linear",
+        }
       : { opacity: 0, animation: `backShade${lin}` }),
   };
 
@@ -678,7 +749,8 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
     pointerEvents: "none",
     transformOrigin: "left center",
     borderRadius: leafRadius,
-    background: "linear-gradient(90deg,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.25) 45%,rgba(0,0,0,0) 78%)",
+    background:
+      "linear-gradient(90deg,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.25) 45%,rgba(0,0,0,0) 78%)",
     ...(live
       ? {
           opacity: Number((0.4 * (1 - prog)).toFixed(3)),
@@ -688,11 +760,31 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
       : { opacity: 0, animation: `${fwd ? "castFwd" : "castBwd"}${lin}` }),
   };
 
+  /* Null when the box is empty, so the banded list and the flat result list are
+     two states rather than one list that is sometimes filtered. Title and
+     description both, since the description is where the subject words live —
+     "penalty rates" is in one, "superannuation" often only in the other. */
+  const trimmedQuery = query.trim().toLowerCase();
+  const matches =
+    trimmedQuery.length === 0
+      ? null
+      : ALL_POSITIONS.filter(
+          (row) =>
+            row.policy.toLowerCase().includes(trimmedQuery) ||
+            row.description.toLowerCase().includes(trimmedQuery),
+        );
+
   // Built from the folios actually on screen, so either cover reads as one page.
   const folios = [left?.folio, right?.folio].filter(Boolean);
-  const counter = folios.length ? `${folios.join("–")} / ${LAST_FOLIO}` : "Cover";
+  const counter = folios.length
+    ? `${folios.join("–")} / ${LAST_FOLIO}`
+    : "Cover";
   const progress = Math.round((i / (PAGES.length - 1)) * 100);
-  const spreadLabel = !state.wide ? "Too narrow" : spread ? "1 page" : "2 pages";
+  const spreadLabel = !state.wide
+    ? "Too narrow"
+    : spread
+      ? "1 page"
+      : "2 pages";
 
   const prevButton = (
     <button
@@ -702,6 +794,30 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
       aria-label="Previous page"
     >
       &#8249;
+    </button>
+  );
+  const startButton = (
+    <button
+      type="button"
+      className={`btn btn-secondary btn-icon ${styles.navBtn}`}
+      onClick={() => goTo(0)}
+      disabled={i === 0}
+      aria-label="Front cover"
+      title="Front cover"
+    >
+      &#171;
+    </button>
+  );
+  const endButton = (
+    <button
+      type="button"
+      className={`btn btn-secondary btn-icon ${styles.navBtn}`}
+      onClick={() => goTo(lastIndex)}
+      disabled={i >= lastIndex}
+      aria-label="Back cover"
+      title="Back cover"
+    >
+      &#187;
     </button>
   );
   const nextButton = (
@@ -774,13 +890,19 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
                         <BookPage page={decorate(front)} />
                         <div style={rightShadeStyle} />
                         <div style={frontShadeStyle} />
-                        <div className={styles.leafGlossFront} style={glossStyle("front")} />
+                        <div
+                          className={styles.leafGlossFront}
+                          style={glossStyle("front")}
+                        />
                       </div>
                       <div style={leafBackStyle}>
                         <BookPage page={decorate(back)} />
                         <div style={leftShadeStyle} />
                         <div style={backShadeStyle} />
-                        <div className={styles.leafGlossBack} style={glossStyle("back")} />
+                        <div
+                          className={styles.leafGlossBack}
+                          style={glossStyle("back")}
+                        />
                       </div>
                     </div>
                   </>
@@ -803,7 +925,9 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
           {immersive && (
             <div className={`${styles.bar} ${styles.barFloating}`}>
               {prevButton}
-              <div className={`${styles.counter} ${styles.counterWide}`}>{counter}</div>
+              <div className={`${styles.counter} ${styles.counterWide}`}>
+                {counter}
+              </div>
               {nextButton}
               <button
                 type="button"
@@ -820,16 +944,21 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
           <aside className={styles.aside}>
             <div className={styles.asideTitle}>The Little Orange Book</div>
             <div className={styles.asideBlurb}>
-              A pocket booklet of on-the-record quotations. Click the right side to turn the page,
-              the left to go back, or use the arrow keys.
+              A pocket booklet of on-the-record quotations. Click the right side
+              to turn the page, the left to go back, or use the arrow keys.
             </div>
             <div className={styles.asideRow}>
+              {startButton}
               {prevButton}
               {nextButton}
+              {endButton}
               <div className={styles.counter}>{counter}</div>
             </div>
             <div className={styles.progressTrack}>
-              <div className={styles.progressFill} style={{ width: `${progress}%` }} />
+              <div
+                className={styles.progressFill}
+                style={{ width: `${progress}%` }}
+              />
             </div>
             <div className={styles.asideActions}>
               <button
@@ -843,29 +972,211 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
                 type="button"
                 className={`btn btn-secondary ${styles.secondaryBtn}`}
                 onClick={() => {
-                  if (stateRef.current.wide) setState((s) => ({ forceSingle: !s.forceSingle }));
+                  if (stateRef.current.wide)
+                    setState((s) => ({ forceSingle: !s.forceSingle }));
                 }}
                 disabled={!state.wide}
               >
                 {spreadLabel}
               </button>
             </div>
-            <div className={styles.jumps}>
-              {CHAPTER_STARTS.map(({ page, index }) => (
-                <button
-                  key={index}
-                  type="button"
-                  className={styles.jump}
-                  onClick={() => goTo(index)}
-                >
-                  {page.short}
-                </button>
-              ))}
+            {/* Both lists sit on one line each and open on hover, which keeps
+                the aside short enough for the book to centre against it. They
+                open over the aside rather than inside it, so the column's
+                height never changes and the book never moves. Hover alone
+                alternates them; :focus-within does the same from a keyboard. */}
+            <div className={styles.group}>
+              <div className={styles.groupHeader}>
+                <span>Chapters</span>
+                <span className={styles.groupCount}>
+                  {CHAPTER_STARTS.length}
+                </span>
+              </div>
+              <div className={styles.groupBody}>
+                <div className={styles.jumps}>
+                  {CHAPTER_STARTS.map(({ page, index }) => (
+                    <button
+                      key={index}
+                      type="button"
+                      className={styles.jump}
+                      onClick={() => goTo(index)}
+                    >
+                      {page.short}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
+
+            <div className={styles.group}>
+              <div className={styles.groupHeader}>
+                <span>The voting record</span>
+                <span className={styles.groupCount}>
+                  {ALL_POSITIONS.length}
+                </span>
+              </div>
+              <div className={`${styles.groupBody} ${styles.recordBody}`}>
+                {/* Focus keeps the panel open while you type — the group opens
+                    on hover, and a search box you cannot reach without losing
+                    it would be useless. */}
+                <input
+                  type="search"
+                  className={styles.search}
+                  placeholder="Search the record"
+                  aria-label="Search the voting record"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                />
+                <div className={styles.recordScroll}>
+                  {matches !== null &&
+                    (matches.length === 0 ? (
+                      <div className={styles.searchEmpty}>
+                        Nothing matches “{query.trim()}”.
+                      </div>
+                    ) : (
+                      <div className={styles.recordBand}>
+                        <div className={styles.searchCount}>
+                          {matches.length} of {ALL_POSITIONS.length}
+                        </div>
+                        {matches.map((row) => (
+                          <button
+                            key={row.tvfyId}
+                            type="button"
+                            className={styles.policyRow}
+                            onClick={() => setOpenPolicy(row)}
+                          >
+                            <span>{row.policy}</span>
+                            <span
+                              className={`${styles.policyFigureInline} ${
+                                styles[
+                                  `verdict-${verdictFor(row.agreement)}` as keyof typeof styles
+                                ]
+                              }`}
+                            >
+                              {Math.round(row.agreement)}%
+                              {VERDICT_GLYPH[verdictFor(row.agreement)]}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    ))}
+                  {matches === null &&
+                    BAND_SUMMARY.map((band) => (
+                      <div key={band.label} className={styles.recordBand}>
+                        <button
+                          type="button"
+                          className={styles.recordBandHead}
+                          onClick={() => goTo(band.index)}
+                          title={`Go to ${band.label} in the book`}
+                        >
+                          <span>{band.short}</span>
+                          <span className={styles.recordCount}>
+                            {band.count}
+                          </span>
+                        </button>
+                        {ALL_POSITIONS.filter(
+                          (row) => bandFor(row.agreement) === band.label,
+                        ).map((row) => (
+                          <button
+                            key={row.tvfyId}
+                            type="button"
+                            className={styles.policyRow}
+                            onClick={() => setOpenPolicy(row)}
+                          >
+                            <span>{row.policy}</span>
+                            <span
+                              className={`${styles.policyFigureInline} ${
+                                styles[
+                                  `verdict-${verdictFor(row.agreement)}` as keyof typeof styles
+                                ]
+                              }`}
+                            >
+                              {Math.round(row.agreement)}%
+                              {VERDICT_GLYPH[verdictFor(row.agreement)]}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    ))}
+                </div>
+                <div className={styles.recordNote}>
+                  {ALL_POSITIONS.length} policies she has voted on ·{" "}
+                  {RECORD_SOURCE}
+                </div>
+              </div>
+            </div>
+
             <div className={styles.asideNote}>{config.disclaimer}</div>
           </aside>
         )}
       </div>
+
+      {/* Detail for one policy. Fixed and centred rather than anchored to the
+          row: the aside is 248px wide and the description does not fit in it,
+          and anchoring inside the book is worse — the leaves are scaled, rotated
+          and clipped. */}
+      {openPolicy && (
+        <div
+          className={styles.policyBackdrop}
+          role="presentation"
+          onClick={() => setOpenPolicy(null)}
+        >
+          <div
+            className={styles.policyPanel}
+            role="dialog"
+            aria-modal="true"
+            aria-label={openPolicy.policy}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className={styles.policyBand}>
+              {bandFor(openPolicy.agreement)}
+            </div>
+            <h2 className={styles.policyTitle}>{openPolicy.policy}</h2>
+            <p className={styles.policyDescription}>{openPolicy.description}</p>
+            <div className={styles.policyFigure}>
+              <span
+                className={`${styles.policyPercent} ${
+                  styles[
+                    `verdict-${verdictFor(openPolicy.agreement)}` as keyof typeof styles
+                  ]
+                }`}
+              >
+                {Math.round(openPolicy.agreement)}%
+                {VERDICT_GLYPH[verdictFor(openPolicy.agreement)]}
+              </span>
+              <span>of relevant divisions voted in favour</span>
+            </div>
+            <div className={styles.policyActions}>
+              <button
+                type="button"
+                className={`btn btn-primary ${styles.primaryBtn}`}
+                onClick={() => {
+                  const page = POLICY_PAGE.get(openPolicy.tvfyId);
+                  if (page !== undefined) goTo(page);
+                  setOpenPolicy(null);
+                }}
+              >
+                See it in the book
+              </button>
+              <button
+                type="button"
+                className={`btn btn-secondary ${styles.secondaryBtn}`}
+                onClick={() => setOpenPolicy(null)}
+              >
+                Close
+              </button>
+            </div>
+            <a
+              className={styles.policySource}
+              href={`https://theyvoteforyou.org.au/policies/${openPolicy.tvfyId}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {RECORD_SOURCE}, policy {openPolicy.tvfyId}
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

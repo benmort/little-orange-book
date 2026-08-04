@@ -67,7 +67,9 @@
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
-  align-items: flex-start;
+  /* The aside is two collapsed lines shorter than it used to be, so the book
+     can sit centred against it instead of hanging from the top. */
+  align-items: center;
   gap: var(--space-6);
   max-width: 100%;
 }
@@ -79,7 +81,17 @@
 
 /* Below the two-up breakpoint the aside cannot sit beside a book, so it drops
    underneath it and the book gets the full width. */
+/* Stacked under the book there is no gutter to open into, so the panels drop
+   below their header and take the aside's width. */
 @media (max-width: 859px) {
+  .groupBody {
+    top: calc(100% + 8px);
+    bottom: auto;
+    right: auto;
+    left: 0;
+    width: 100%;
+    transform: translateY(-4px);
+  }
   .layout {
     flex-direction: column;
     align-items: center;
@@ -218,7 +230,12 @@
 .asideRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+}
+/* Four controls and a counter in 248px — the icon buttons come in a size. */
+.asideRow .navBtn {
+  width: 32px;
+  height: 32px;
 }
 .progressTrack {
   height: 4px;
@@ -258,6 +275,103 @@
   border-color: #ff5a00;
   color: #000;
 }
+/* A one-line header that opens its list over the aside on hover. The body is
+   taken out of flow so opening one never changes the column's height — the
+   book would otherwise jump every time the pointer crossed the sidebar. */
+.group {
+  position: relative;
+  border-top: 1px solid #333;
+  padding-top: 10px;
+}
+.groupHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ff5a00;
+  cursor: default;
+}
+.groupCount {
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+  color: #8c8c8c;
+}
+.group:hover .groupCount,
+.group:focus-within .groupCount {
+  color: #ff5a00;
+}
+.groupBody {
+  position: absolute;
+  z-index: 6;
+  /* Opens into the gutter beside the aside, not downward. Downward, the first
+     group's panel lies over the second group's header, and there is then no way
+     to reach the second one without leaving the first — the panel you have to
+     cross to get there is the thing keeping it open. */
+  /* Bottom-anchored: both headers sit low in the aside, and a panel hanging
+     down from them runs off the foot of the window. */
+  top: auto;
+  bottom: 0;
+  right: calc(100% + 12px);
+  width: 268px;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid #333;
+  background: #0e0e11;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(6px);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    visibility 160ms;
+}
+.group:hover .groupBody,
+.group:focus-within .groupBody {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.recordRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 2px 0;
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 1.45;
+  color: #b3b3b3;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.recordRow:hover {
+  color: #ff5a00;
+}
+.recordCount {
+  flex: none;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  color: #e6e6e6;
+}
+.recordRow:hover .recordCount {
+  color: #ff5a00;
+}
+.recordNote {
+  margin-top: 7px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #8c8c8c;
+}
+
 .asideNote {
   font-size: 10.5px;
   line-height: 1.5;
@@ -275,10 +389,14 @@
   border-color: #fff;
   color: #fff;
 }
-.navBtn.navBtn:hover {
+.navBtn.navBtn:hover:not(:disabled) {
   background: #ff5a00;
   border-color: #ff5a00;
   color: #000;
+}
+.navBtn.navBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 .readBtn.readBtn {
@@ -307,4 +425,196 @@
 .secondaryBtn.secondaryBtn:hover:not(:disabled) {
   background: #fff;
   color: #000;
+}
+
+/* ── The record list, and one policy's detail ──────────────────────────── */
+
+.recordBody {
+  padding-bottom: 10px;
+}
+.recordScroll {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* 184 policies do not fit a sidebar. The list scrolls inside the panel
+     rather than growing it past the viewport. */
+  max-height: min(46vh, 340px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.recordBand {
+  display: flex;
+  flex-direction: column;
+}
+.recordBandHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 2px 0 4px;
+  font-family: inherit;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8c8c8c;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #2a2a2a;
+  cursor: pointer;
+  text-align: left;
+}
+.recordBandHead:hover {
+  color: #ff5a00;
+  border-bottom-color: #ff5a00;
+}
+.policyRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 4px 0;
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #b3b3b3;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.policyRow:hover {
+  color: #ff5a00;
+}
+.recordCount {
+  flex: none;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  color: #e6e6e6;
+}
+.recordNote {
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px solid #2a2a2a;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #8c8c8c;
+}
+
+.policyBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgba(5, 5, 10, 0.82);
+}
+.policyPanel {
+  width: min(430px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: var(--space-6);
+  border-radius: 18px;
+  border: 2px solid #ff5a00;
+  background: #0e0e11;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+.policyBand {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ff5a00;
+}
+.policyTitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: #f2f2ea;
+}
+.policyDescription {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #b3b3b3;
+}
+.policyFigure {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid #333;
+  font-size: 11.5px;
+  color: #8c8c8c;
+}
+.policyPercent {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  color: #ff5a00;
+}
+.policyActions {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+.policySource {
+  font-size: 10.5px;
+  color: #8c8c8c;
+}
+.policySource:hover {
+  color: #ff5a00;
+}
+
+/* Brighter than the printed weights — these sit on near-black, not on stock. */
+.verdict-for {
+  color: #4ade80;
+}
+.verdict-mixed {
+  color: #fbbf24;
+}
+.verdict-against {
+  color: #f87171;
+}
+.policyFigureInline {
+  flex: none;
+  font-family: var(--font-heading);
+  font-size: 10px;
+}
+
+.search {
+  width: 100%;
+  min-height: 32px;
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 12px;
+  color: #f2f2ea;
+  caret-color: #ff5a00;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 999px;
+}
+.search::placeholder {
+  color: #6b6b6b;
+}
+.search:focus-visible {
+  outline: none;
+  border-color: #ff5a00;
+}
+.searchCount {
+  padding-bottom: 4px;
+  border-bottom: 1px solid #2a2a2a;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8c8c8c;
+}
+.searchEmpty {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #8c8c8c;
 }

@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-import type { VoteRow } from "@/lib/content";
+import { VERDICT_GLYPH, verdictFor, type VoteRow } from "@/lib/content";
 import CoverPortrait from "./CoverPortrait";
 import styles from "./BookPage.module.css";
 
@@ -32,6 +32,7 @@ export interface PageView {
   heading?: string;
   body?: string;
   body2?: string;
+  body3?: string;
   kicker?: string;
   quote?: string;
   cite?: string;
@@ -72,6 +73,13 @@ export const BLANK_PAGE: PageView = {
   continued: false,
   toc: [],
 };
+
+/** Ink weights that hold up on white stock — a bright yellow would not. */
+const VERDICT_CLASS = {
+  for: styles.voteFor,
+  mixed: styles.voteMixed,
+  against: styles.voteAgainst,
+} as const;
 
 export default function BookPage({ page }: { page: PageView }) {
   const accent: CSSProperties = { color: page.coverColor };
@@ -193,6 +201,7 @@ export default function BookPage({ page }: { page: PageView }) {
             <div className={styles.textRule} style={accentBg} />
             <div className={styles.textParagraph}>{page.body}</div>
             <div className={styles.textParagraph}>{page.body2}</div>
+            {page.body3 && <div className={styles.textParagraph}>{page.body3}</div>}
           </div>
           <div className={styles.textFolio}>{page.folio}</div>
         </div>
@@ -224,7 +233,12 @@ export default function BookPage({ page }: { page: PageView }) {
           </div>
           <div className={styles.tableColumn}>
             {page.heading && <div className={styles.tableHeading}>{page.heading}</div>}
-            {!page.continued && <div className={styles.tableBand}>{page.band}</div>}
+            {/* Repeated on every leaf of a band, so a spread never shows rows
+                whose heading is two pages back. */}
+            <div className={styles.tableBand}>
+              {page.band}
+              {page.continued && <span className={styles.tableBandCont}> cont.</span>}
+            </div>
             <div className={styles.tableHead}>
               <span>Policy</span>
               <span className={styles.alignRight}>In favour</span>
@@ -236,7 +250,10 @@ export default function BookPage({ page }: { page: PageView }) {
                   <br />
                   <span className={styles.voteYear}>Policy {row.tvfyId}</span>
                 </span>
-                <span className={styles.voteValue}>{Math.round(row.agreement)}%</span>
+                <span className={`${styles.voteValue} ${VERDICT_CLASS[verdictFor(row.agreement)]}`}>
+                  {Math.round(row.agreement)}%
+                  <span className={styles.voteArrow}>{VERDICT_GLYPH[verdictFor(row.agreement)]}</span>
+                </span>
               </div>
             ))}
           </div>
