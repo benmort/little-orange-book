@@ -10,7 +10,9 @@
     "typecheck": "tsc --noEmit",
     "sync:hanson": "tsx scripts/sync-hanson.ts",
     "qr": "tsx scripts/make-qr.ts",
-    "quotes": "tsx scripts/find-quotes.ts"
+    "quotes": "tsx scripts/find-quotes.ts",
+    "pdf": "tsx scripts/make-pdf.ts",
+    "cards": "tsx scripts/make-cards.ts"
   },
   "dependencies": {
     "next": "16.2.12",

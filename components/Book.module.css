@@ -252,6 +252,14 @@
   display: flex;
   gap: 6px;
 }
+/* An anchor styled as a button — it must look like the one beside it. */
+.downloadBtn.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .jumps {
   display: flex;
   flex-wrap: wrap;

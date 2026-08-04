@@ -465,6 +465,8 @@ export interface Page {
   quote?: string;
   cite?: string;
   placeholder?: boolean;
+  /** Set on quotation leaves that carry a sourced quotation. */
+  quoteId?: string;
   note?: string;
   /** Section openers: the line under the rule. */
   lead?: string;
@@ -529,8 +531,15 @@ function buildPages(): Page[] {
     const verified = VERIFIED_BY_CHAPTER[chapter.short] ?? [];
     const quotes =
       verified.length > 0
-        ? verified.map((q) => ({ quote: q.text, cite: q.cite, placeholder: false }))
-        : [{ quote: chapter.quotes[0].quote, cite: chapter.quotes[0].cite, placeholder: true }];
+        ? verified.map((q) => ({ quote: q.text, cite: q.cite, placeholder: false, id: q.id }))
+        : [
+            {
+              quote: chapter.quotes[0].quote,
+              cite: chapter.quotes[0].cite,
+              placeholder: true,
+              id: undefined as string | undefined,
+            },
+          ];
 
     quotes.forEach((q) => {
       pages.push({
@@ -540,6 +549,7 @@ function buildPages(): Page[] {
         quote: q.quote,
         cite: q.cite,
         placeholder: q.placeholder,
+        quoteId: q.id,
       });
     });
 

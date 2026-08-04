@@ -11,6 +11,7 @@ import {
   CHAPTER_STARTS,
   PAGES,
   POLICY_PAGE,
+  QUOTATIONS,
   RECORD_SOURCE,
   type Page,
   VERDICT_GLYPH,
@@ -18,6 +19,7 @@ import {
   type VoteRow,
 } from "@/lib/content";
 import BookPage, { BLANK_PAGE, type PageView } from "./BookPage";
+import SharePanel from "./SharePanel";
 import styles from "./Book.module.css";
 
 /* The book is laid out in a fixed 380 × 570 coordinate space and then scaled
@@ -136,6 +138,7 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
   /** The policy whose detail panel is open, if any. */
   const [openPolicy, setOpenPolicy] = useState<VoteRow | null>(null);
   const [query, setQuery] = useState("");
+  const [sharing, setSharing] = useState(false);
 
   /** Turn one leaf (single) or one spread (two-up) in `dir`. */
   const turn = useCallback(
@@ -795,6 +798,10 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
         );
 
   // Built from the folios actually on screen, so either cover reads as one page.
+  /* Either visible leaf may be the quotation; the recto wins when both are. */
+  const shareableId = right?.quoteId ?? left?.quoteId;
+  const shareable = shareableId ? QUOTATIONS.find((q) => q.id === shareableId) : undefined;
+
   const folios = [left?.folio, right?.folio].filter(Boolean);
   const counter = folios.length
     ? `${folios.join("–")} / ${LAST_FOLIO}`
@@ -984,6 +991,24 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
             <div className={styles.asideActions}>
               <button
                 type="button"
+                className={`btn btn-secondary ${styles.secondaryBtn}`}
+                onClick={() => setSharing(true)}
+                disabled={!shareable}
+                title={shareable ? "Share this quotation" : "Turn to a quotation to share it"}
+              >
+                Share
+              </button>
+              <a
+                className={`btn btn-secondary ${styles.secondaryBtn} ${styles.downloadBtn}`}
+                href="/little-orange-book.pdf"
+                download
+              >
+                Download
+              </a>
+            </div>
+            <div className={styles.asideActions}>
+              <button
+                type="button"
                 className={`btn btn-primary ${styles.primaryBtn}`}
                 onClick={() => setState({ immersive: true })}
               >
@@ -1136,6 +1161,10 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
           row: the aside is 248px wide and the description does not fit in it,
           and anchoring inside the book is worse — the leaves are scaled, rotated
           and clipped. */}
+      {sharing && shareable && (
+        <SharePanel quotation={shareable} onClose={() => setSharing(false)} />
+      )}
+
       {openPolicy && (
         <div
           className={styles.policyBackdrop}
