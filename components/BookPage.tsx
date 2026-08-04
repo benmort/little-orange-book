@@ -27,7 +27,6 @@ export interface PageView {
   isTable: boolean;
   isBack: boolean;
   isSection: boolean;
-  isAuthor: boolean;
   lead?: string;
   chapterNumber?: number;
   heading?: string;
@@ -63,7 +62,6 @@ export const BLANK_PAGE: PageView = {
   isTable: false,
   isBack: false,
   isSection: false,
-  isAuthor: false,
   isPlaceholder: false,
   quoteFontSize: 24,
   coverColor: "#ff5a00",
@@ -139,26 +137,6 @@ export default function BookPage({ page }: { page: PageView }) {
         </div>
       )}
 
-      {/* About the author. The portrait is the morph's last word on the subject. */}
-      {page.isAuthor && (
-        <div className={styles.author}>
-          <div className={styles.textHeader} style={accent}>
-            {page.kicker}
-          </div>
-          <div className={styles.authorColumn}>
-            <div className={styles.authorPortrait}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/pig-portrait.webp" alt="The cover portrait, morphed" />
-            </div>
-            <div className={styles.textHeading}>{page.heading}</div>
-            <div className={styles.textRule} style={accentBg} />
-            <div className={styles.textParagraph}>{page.body}</div>
-            <div className={styles.textParagraph}>{page.body2}</div>
-          </div>
-          <div className={styles.authorCite}>{page.cite}</div>
-          <div className={styles.textFolio}>{page.folio}</div>
-        </div>
-      )}
 
       {page.isChapter && (
         <div className={styles.chapter} style={accentBg}>

@@ -388,7 +388,6 @@ export type PageType =
   | "quote"
   | "section"
   | "table"
-  | "author"
   | "back";
 
 export interface Page {
@@ -493,6 +492,12 @@ function buildPages(): Page[] {
     });
   });
 
+  /* The record runs to however many leaves the data needs, so the parity of the
+     back matter is not fixed. Pad here rather than later: putting the closing
+     text on a verso means the leaf facing it is the inside back cover, and the
+     last spread before the covers is never two blanks. */
+  if (pages.length % 2 === 0) pages.push({ type: "blank" });
+
   pages.push({
     type: "text",
     kicker: "Sources",
@@ -501,15 +506,6 @@ function buildPages(): Page[] {
     body2: "Corrections are welcome and will be made.",
   });
 
-  pages.push({
-    type: "author",
-    short: "The Author",
-    kicker: "About the author",
-    heading: "Pauline Hanson",
-    body: `Senator for Queensland since 2016, for the party that carries her name. She was first elected to federal parliament in 1996.`,
-    body2: `She has attended ${MEMBER.votesAttended?.toLocaleString()} of ${MEMBER.votesPossible?.toLocaleString()} divisions — a little over half the votes she was there to cast.`,
-    cite: "Attendance from They Vote For You.",
-  });
 
   /* The closing leaf, mirroring the opening one. The front cover is the recto
      of leaf one and turns away to the left; the back cover is the verso of the
@@ -517,9 +513,6 @@ function buildPages(): Page[] {
      book closed from the back. The trailing blank exists only to give that leaf
      a recto to occupy; the reader never shows it. */
   pages.push({ type: "blank" }); // inside the back cover
-  // The record runs to however many leaves the data needs, so the parity here
-  // is not fixed: pad until the back cover lands on a verso.
-  if (pages.length % 2 === 0) pages.push({ type: "blank" });
   pages.push({ type: "back" });
   pages.push({ type: "blank" });
 
@@ -532,12 +525,7 @@ export const PAGES: Page[] = buildPages();
 export const CHAPTER_STARTS: Array<{ page: Page; index: number }> = PAGES.map((page, index) => ({
   page,
   index,
-})).filter(
-  (entry) =>
-    entry.page.type === "chapter" ||
-    entry.page.type === "section" ||
-    entry.page.type === "author",
-);
+})).filter((entry) => entry.page.type === "chapter" || entry.page.type === "section");
 
 /** The pages that make it into the 105 × 148 mm print booklet. */
 export const PRINT_PAGES = PAGES.filter(
@@ -546,8 +534,7 @@ export const PRINT_PAGES = PAGES.filter(
     p.type === "text" ||
     p.type === "chapter" ||
     p.type === "section" ||
-    p.type === "table" ||
-    p.type === "author",
+    p.type === "table",
 ).map((p) => ({
   kicker:
     p.type === "table"

@@ -116,7 +116,6 @@ public/
   hanson-portrait.webp Cover still, transparent ground
   hanson-morph.webm    Hanson → Trump → pig morph, 15.2 s loop, alpha channel
   hanson-morph.mp4     H.264 fallback — no alpha, so this one has the orange baked in
-  pig-portrait.webp    Back cover portrait, transparent ground
 ```
 
 ### The cover morph
@@ -154,9 +153,6 @@ ffmpeg -i "$SRC" -an -vf "$KEYED,format=yuva420p" -c:v libvpx-vp9 -pix_fmt yuva4
 
 ffmpeg -i "$SRC" -frames:v 1 -vf "$KEYED" -update 1 /tmp/still.png
 cwebp -q 90 -alpha_q 100 -exact /tmp/still.png -o public/hanson-portrait.webp
-
-ffmpeg -ss 6.5 -i "$SRC" -frames:v 1 -vf "$KEYED" -update 1 /tmp/pig.png
-cwebp -q 90 -alpha_q 100 -exact /tmp/pig.png -o public/pig-portrait.webp
 ```
 
 `format=rgba` before `scale` matters — without it lanczos drops the alpha. Similarity is 0.10
@@ -215,9 +211,13 @@ The page behind each is a blank, so suppressing it loses no content. The back co
 front's ground and keyline and carries what a back cover is for — what to do next, the QR block,
 the campaign label and URL, and the authorisation line.
 
-Back matter runs: notes on sources, then **About the author**, which is where the morph's last
-frame ends up. Its two facts are the ones the data supports — the chamber and seat she holds, and
-her division attendance, cited.
+Back matter is the notes on sources, then the covers.
+
+The record runs to however many leaves the data needs, so the parity of the back matter is not
+fixed. The pad that corrects it goes *before* the closing text rather than after: that puts the
+text on a verso, so the leaf facing it is the inside back cover and the last spread before the
+covers is never two blanks. A build-time check would catch it, but the shape is the point — padding
+at the end fixes the parity and leaves a dead spread behind.
 
 The geometry follows where a turn is *heading*, not where it started, so the book widens into a
 spread while the front cover is still swinging open and narrows back to a single leaf as the back
