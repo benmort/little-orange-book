@@ -1,0 +1,71 @@
+{
+  "note": "Verified quotations, replacing placeholders chapter by chapter. Each carries the occasion, the date, and a link to the record. `verification` says how it was checked and is not printed — it is there so the last Hansard check before a print run is a known task, not an assumption.",
+  "quotations": [
+    {
+      "id": "1996-first-speech-swamped",
+      "chapter": "On Race",
+      "text": "I believe we are in danger of being swamped by Asians. Between 1984 and 1995, 40 per cent of all migrants coming into this country were of Asian origin. They have their own culture and religion, form ghettos and do not assimilate.",
+      "occasion": "First speech, House of Representatives",
+      "date": "1996-09-10",
+      "cite": "House of Representatives Hansard, 10 September 1996",
+      "sourceType": "hansard",
+      "url": "https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;query=Id:%22chamber/hansards/16daad94-5c74-4641-a730-7f6d74312148/0140%22",
+      "verification": "Reproduced by australianpolitics.com as the Hansard transcript, and the passage corroborated independently. Not yet read against ParlInfo directly."
+    },
+    {
+      "id": "2016-first-speech-swamped",
+      "chapter": "On Race",
+      "text": "We are in danger of being swamped by Muslims who bear a culture and ideology that is incompatible with our own.",
+      "occasion": "First speech to the Senate",
+      "date": "2016-09-14",
+      "cite": "Senate Hansard, 14 September 2016",
+      "sourceType": "hansard",
+      "url": "https://www.sbs.com.au/news/article/hanson-warns-of-being-swamped-by-muslims/4s9qc1ppu",
+      "verification": "Reported consistently by SBS, BBC and others on the day. The link is to a news report, not to Hansard — replace it with the ParlInfo record before print."
+    },
+    {
+      "id": "1996-multiculturalism-abolished",
+      "chapter": "On Race",
+      "text": "I and most Australians want our immigration policy radically reviewed and that of multiculturalism abolished.",
+      "occasion": "First speech, House of Representatives",
+      "date": "1996-09-10",
+      "cite": "House of Representatives Hansard, 10 September 1996",
+      "sourceType": "hansard",
+      "url": "https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;query=Id:%22chamber/hansards/16daad94-5c74-4641-a730-7f6d74312148/0140%22",
+      "verification": "Reproduced by australianpolitics.com as the Hansard transcript, and corroborated independently. Not yet read against ParlInfo directly."
+    },
+    {
+      "id": "1996-fed-up-inequalities",
+      "chapter": "On First Nations",
+      "text": "I am fed up to the back teeth with the inequalities that are being promoted by the government and paid for by the taxpayer.",
+      "occasion": "First speech, House of Representatives",
+      "date": "1996-09-10",
+      "cite": "House of Representatives Hansard, 10 September 1996",
+      "sourceType": "hansard",
+      "url": "https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;query=Id:%22chamber/hansards/16daad94-5c74-4641-a730-7f6d74312148/0140%22",
+      "verification": "Reproduced by australianpolitics.com as the Hansard transcript. Not yet read against ParlInfo directly."
+    },
+    {
+      "id": "1996-housing-loans",
+      "chapter": "On First Nations",
+      "text": "I have done research on benefits available only to Aboriginals and challenge anyone to tell me how Aboriginals are disadvantaged when they can obtain three and five per cent housing loans denied to non-Aboriginals.",
+      "occasion": "First speech, House of Representatives",
+      "date": "1996-09-10",
+      "cite": "House of Representatives Hansard, 10 September 1996",
+      "sourceType": "hansard",
+      "url": "https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;query=Id:%22chamber/hansards/16daad94-5c74-4641-a730-7f6d74312148/0140%22",
+      "verification": "Reproduced by australianpolitics.com as the Hansard transcript. Not yet read against ParlInfo directly."
+    },
+    {
+      "id": "2017-penalty-rates-support",
+      "chapter": "On Wages",
+      "text": "I have heard, from people coming through my office, that the Australian people do not want the penalty rates cut. I will support what the people want. Over 75 per cent do not want the penalty rates cut, and I support that.",
+      "occasion": "Senate debate",
+      "date": "2017-03-28",
+      "cite": "Senate Hansard, 28 March 2017",
+      "sourceType": "hansard",
+      "url": "https://www.openaustralia.org.au/senate/?id=2017-03-28.126.1",
+      "verification": "Pulled verbatim from OpenAustralia's Hansard record by npm run quotes, and checked for the phrase before being kept."
+    }
+  ]
+}

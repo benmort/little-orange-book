@@ -274,6 +274,23 @@ position is remembered in `localStorage` under `lob-page`.
 one quotation per leaf and the full voting record after them, each row citing its policy number. Chrome and Safari honour `@page size`; give it
 "Print backgrounds" off and no scaling.
 
+## Branding and previews
+
+*The Little Orange Book* is the masthead; *Quotations from Pauline Hanson* is the cover line under
+it. `app/opengraph-image.png` and `app/icon.png` are picked up by Next's file convention.
+
+**The preview image is the cover, rendered from the running book** rather than drawn separately, so
+it cannot drift from the real thing: the reader is put on the cover in immersive mode, its control
+bar hidden, and screenshotted at 1200 × 630. Re-render it the same way if the cover changes. The
+icon is not the cover photograph — at 16 px a portrait is mud — but the cover's other identity,
+orange stock inside a black keyline, which survives the size.
+
+`/enter` overrides `openGraph` and `twitter` including **`images: []`**. The site's preview image
+*is* the cover, which names the subject in 200-point type, and Next inherits metadata into every
+route: without that override the gate would put the whole point of the booklet into the link
+preview of the one page a stranger is allowed to see. Its title is `absolute` too, or the root's
+`%s — The Little Orange Book` template doubles it.
+
 ## Sourcing the quotations
 
 The 39 quote pages are placeholders. `npm run quotes` gathers real candidates for them out of
@@ -308,7 +325,13 @@ conferences, radio and television interviews and media releases that many placeh
 
 ## Content
 
-Every quotation in `lib/content.ts` is a placeholder carrying `placeholder: true`, which prints
+`lib/quotations.json` holds the quotations that have been sourced — six so far, across *On Race*,
+*On First Nations* and *On Wages*. Each carries its occasion, date, citation, a link to the record,
+and a `verification` field saying how it was checked, which is not printed: it is there so the last
+Hansard read before a print run is a known task rather than an assumption. Verified quotations take
+a chapter's slots in order; whatever is left keeps its placeholder.
+
+The rest in `lib/content.ts` are placeholders carrying `placeholder: true`, which prints
 a **Placeholder** tag on the page. Replace the text and the citation together, then drop the flag.
 Set `showPlaceholderTags: false` in `lib/config.ts` to suppress the tags without editing content.
 

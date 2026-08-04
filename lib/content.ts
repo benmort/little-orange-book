@@ -1,4 +1,5 @@
 import hansonData from "./hanson-data.json";
+import quotationsData from "./quotations.json";
 
 /**
  * Content for "Quotations from Pauline Hanson".
@@ -15,6 +16,32 @@ export interface Chapter {
   body: string;
   quotes: Array<{ quote: string; cite: string }>;
 }
+
+/**
+ * Verified quotations, keyed by chapter. Each one displaces a placeholder in the
+ * order they are listed; a chapter with fewer than three keeps its placeholders
+ * for the rest, tagged as such on the page. Nothing here is quoted from memory —
+ * see lib/quotations.json for how each was checked, and what still needs a last
+ * look at Hansard before a print run.
+ */
+export interface Quotation {
+  id: string;
+  chapter: string;
+  text: string;
+  occasion: string;
+  date: string;
+  cite: string;
+  sourceType: string;
+  url: string;
+  verification: string;
+}
+
+export const QUOTATIONS: Quotation[] = quotationsData.quotations;
+
+const VERIFIED_BY_CHAPTER = QUOTATIONS.reduce<Record<string, Quotation[]>>((acc, q) => {
+  (acc[q.chapter] ??= []).push(q);
+  return acc;
+}, {});
 
 export const CHAPTERS: Chapter[] = [
   {
@@ -494,14 +521,19 @@ function buildPages(): Page[] {
       heading: chapter.heading,
       body: chapter.body,
     });
-    chapter.quotes.forEach((q) => {
+
+    /* Real quotations take the chapter's slots first; whatever is left over
+       keeps its placeholder, and its tag. */
+    const verified = VERIFIED_BY_CHAPTER[chapter.short] ?? [];
+    chapter.quotes.forEach((placeholder, slot) => {
+      const real = verified[slot];
       pages.push({
         type: "quote",
         short: chapter.short,
         kicker: chapter.short,
-        quote: q.quote,
-        cite: q.cite,
-        placeholder: true,
+        quote: real ? real.text : placeholder.quote,
+        cite: real ? real.cite : placeholder.cite,
+        placeholder: !real,
       });
     });
   });
