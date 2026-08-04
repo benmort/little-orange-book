@@ -8,7 +8,7 @@ import styles from "./BookPage.module.css";
 /**
  * The cover portrait. It sits still, under the design's own treatment —
  * greyscale, hard contrast, multiplied into the cover so the ink reads as part
- * of the stock. Double-click it and the Hanson → Trump → pig morph loads and
+ * of the stock. Double-click it and the Hanson → Trump → Hanson morph loads and
  * plays in colour.
  *
  * That treatment could not be used while the media carried its own orange
@@ -23,9 +23,8 @@ import styles from "./BookPage.module.css";
  * than after first paint.
  *
  * The hand-over is a cut, not a fade. Both layers are transparent, so the still
- * would show through the morph wherever the figure is narrower than Hanson —
- * her hair around the pig's head — and cross-fading two transparent layers lets
- * the ground through both at once.
+ * would show through wherever the two silhouettes differ, and cross-fading two
+ * transparent layers lets the ground through both at once.
  */
 export default function CoverPortrait() {
   const [armed, setArmed] = useState(false);

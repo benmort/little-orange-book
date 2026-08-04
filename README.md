@@ -115,7 +115,7 @@ lib/
 public/
   campaign-qr.svg      Back cover QR — generated, see below
   hanson-portrait.webp Cover still, transparent ground
-  hanson-morph.webm    Hanson → Trump → pig morph, 15.2 s loop, alpha channel
+  hanson-morph.webm    Hanson → Trump → Hanson morph, 10 s loop, alpha channel
   hanson-morph.mp4     H.264 fallback — no alpha, so this one has the orange baked in
 ```
 
@@ -142,24 +142,32 @@ from each other. Keying sidesteps the whole question — there is one orange bec
 one thing painting orange. For the same reason the still is served `unoptimized`.
 
 The hand-over is a **cut, not a fade**. Both layers are transparent, so the still would show
-through the morph wherever the figure is narrower than Hanson — her hair around the pig's head —
-and cross-fading two transparent layers lets the ground through both at once. The video is held
-at frame one until it can play, and frame one is what the still shows, so the cut lands on
-identical pixels. `canplaythrough` fires again on re-buffer and on every loop, so the hand-over
-is guarded by a ref; without it each fire would rewind the morph.
+through wherever its silhouette differs from the moving figure, and cross-fading two transparent
+layers lets the ground through both at once. The video is held at frame one until it can play, and
+frame one is what the still shows, so the cut lands on identical pixels. `canplaythrough` fires
+again on re-buffer and on every loop, so the hand-over is guarded by a ref; without it each fire
+would rewind the morph.
 
 The source GIFs under `output/imagegen/` are 129 MB and 64 MB, which is not something you serve.
-`public/` holds re-encodes at 440 × 544:
+The delivery loop uses only the opening Hanson → Trump → Hanson passage, then holds its final
+Hanson frame so the loop lands cleanly. `public/` holds 10-second re-encodes at 440 × 544:
 
 ```bash
 SRC=output/imagegen/morph-sequence-v2/pauline-trump-pig-morph-ultra-smooth.gif
-KEYED="fps=25,colorkey=0xE9350C:0.10:0.05,format=rgba,scale=440:-2:flags=lanczos"
+TIMING="trim=start=0:end=5,setpts=PTS-STARTPTS,tpad=start_duration=1.25:start_mode=clone:stop_duration=3.75:stop_mode=clone,fps=25,trim=start=0:end=10,setpts=PTS-STARTPTS"
+KEYED="$TIMING,colorkey=0xE9350C:0.10:0.05,format=rgba,scale=440:-2:flags=lanczos"
+BAKED="$TIMING,format=rgba,scale=440:-2:flags=lanczos,format=yuv420p"
 
 # WebM carries a real alpha channel. ffprobe reports the base layer as yuv420p
 # either way — check the container's alpha_mode tag, not the pix_fmt.
 ffmpeg -i "$SRC" -an -vf "$KEYED,format=yuva420p" -c:v libvpx-vp9 -pix_fmt yuva420p \
   -crf 34 -b:v 0 -row-mt 1 -cpu-used 2 -auto-alt-ref 0 \
   -color_primaries bt709 -color_trc bt709 -colorspace bt709 public/hanson-morph.webm
+
+# H.264 fallback with the source orange baked in.
+ffmpeg -i "$SRC" -an -vf "$BAKED" -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p \
+  -movflags +faststart -color_primaries bt709 -color_trc bt709 -colorspace bt709 \
+  public/hanson-morph.mp4
 
 ffmpeg -i "$SRC" -frames:v 1 -vf "$KEYED" -update 1 /tmp/still.png
 cwebp -q 90 -alpha_q 100 -exact /tmp/still.png -o public/hanson-portrait.webp
@@ -265,6 +273,38 @@ position is remembered in `localStorage` under `lob-page`.
 `Cmd/Ctrl-P` swaps the reader out for `PrintBook` and sets the sheet to 105 × 148 mm — 82 pages,
 one quotation per leaf and the full voting record after them, each row citing its policy number. Chrome and Safari honour `@page size`; give it
 "Print backgrounds" off and no scaling.
+
+## Sourcing the quotations
+
+The 39 quote pages are placeholders. `npm run quotes` gathers real candidates for them out of
+Hansard, into `output/quote-candidates.json`:
+
+```bash
+npm run quotes            # every chapter
+npm run quotes -- Wages   # one, by its short label
+```
+
+Candidates, not content — deliberately written outside `lib/`. Choosing which passage becomes a
+quotation, and trimming it fairly, is an editorial act; the script's job is to put sourced passages
+in front of a person, not to fill the booklet by itself.
+
+**Discovery goes through the website, the text through the API.** OpenAustralia's API cannot do
+this alone: `getDebates` and `getHansard` both return HTTP 500 for `search=` and for `person=`, and
+the person path reports `section:lords` — the Australian fork inherited TheyWorkForYou's chamber
+mapping and the Senate does not survive it. The website's search *does* support
+`speaker:10280 "phrase"`, so that finds the speeches, and `getDebates?gid=` returns each one as
+clean JSON with the speaker attached and a link to the ParlInfo original. Her OpenAustralia person
+id is 10280 — the same number as the TVFY id already in the snapshot, so the two datasets join
+with no matching work.
+
+Every hit is checked for its phrase before being kept. The website's search matches wider than a
+phrase query implies — "penalty rates" returns speeches about Closing the Gap — so about one
+candidate in six is dropped rather than wasting a reader's time.
+
+**What this cannot reach.** Her OpenAustralia member record starts 2016-07-01, so this is her
+current Senate term only: the 1996 first speech that two chapters cite is not in this source and
+has to come from APH's own ParlInfo. Nor is anything said outside parliament — the press
+conferences, radio and television interviews and media releases that many placeholders cite.
 
 ## Content
 
