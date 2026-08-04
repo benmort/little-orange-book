@@ -5,7 +5,8 @@ import CoverPortrait from "./CoverPortrait";
 import styles from "./BookPage.module.css";
 
 export interface TocEntry {
-  n: number;
+  /** Chapters are numbered; sections are not. */
+  n?: number;
   title: string;
   page: number;
   go: () => void;
@@ -25,6 +26,9 @@ export interface PageView {
   isContents: boolean;
   isTable: boolean;
   isBack: boolean;
+  isSection: boolean;
+  isAuthor: boolean;
+  lead?: string;
   chapterNumber?: number;
   heading?: string;
   body?: string;
@@ -58,6 +62,8 @@ export const BLANK_PAGE: PageView = {
   isContents: false,
   isTable: false,
   isBack: false,
+  isSection: false,
+  isAuthor: false,
   isPlaceholder: false,
   quoteFontSize: 24,
   coverColor: "#ff5a00",
@@ -91,24 +97,66 @@ export default function BookPage({ page }: { page: PageView }) {
         </div>
       )}
 
-      {/* The back cover mirrors the front: same ground, same keyline, same
-          portrait slot, same type. The morph's punchline stands in for the
-          portrait and delivers the verdict. */}
+      {/* The back cover keeps the front's ground and keyline, and carries what
+          a back cover is for: what to do next, and who authorised it. */}
       {page.isBack && (
-        <div className={styles.cover} style={accentBg}>
+        <div className={styles.back} style={accentBg}>
           <div className={styles.coverRule} />
-          <div className={styles.portrait}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/pig-portrait.webp" alt="The cover portrait morphed into a pig" />
-          </div>
-          <div className={styles.coverTitle}>
-            <div className={styles.coverName}>
-              Racist
-              <br />
-              Pig!
+          <div className={styles.backTop}>
+            <div className={styles.backHeading}>Read it. Then talk to the person next to you.</div>
+            <div className={styles.backBody}>
+              Every quotation in this booklet is on the public record, and so is every vote. Check
+              any of them. That is the point.
             </div>
           </div>
-          <div className={`${styles.coverFooter} ${styles.coverFooterUrl}`}>{page.campaignUrl}</div>
+          <div className={styles.backCampaign}>
+            <div className={styles.qr}>
+              QR CODE
+              <br />
+              TO CAMPAIGN
+            </div>
+            <div className={styles.campaign}>
+              <div className={styles.campaignLabel}>{page.campaignLabel}</div>
+              <div className={styles.campaignUrl}>{page.campaignUrl}</div>
+            </div>
+          </div>
+          <div className={styles.backDisclaimer}>{page.disclaimer}</div>
+        </div>
+      )}
+
+      {/* A section opener, set like a chapter's but unnumbered. */}
+      {page.isSection && (
+        <div className={styles.chapter} style={accentBg}>
+          <div className={styles.chapterBar} />
+          <div className={styles.chapterNumber} style={accent}>
+            Section
+          </div>
+          <div className={styles.chapterHeading}>{page.heading}</div>
+          <div className={styles.chapterDivider} />
+          <div className={styles.chapterBody}>{page.body}</div>
+          {page.lead && <div className={styles.sectionLead}>{page.lead}</div>}
+          <div className={styles.chapterFolio}>{page.folio}</div>
+        </div>
+      )}
+
+      {/* About the author. The portrait is the morph's last word on the subject. */}
+      {page.isAuthor && (
+        <div className={styles.author}>
+          <div className={styles.textHeader} style={accent}>
+            {page.kicker}
+          </div>
+          <div className={styles.authorColumn}>
+            <div className={styles.authorPortrait}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/pig-portrait.webp" alt="The cover portrait, morphed" />
+            </div>
+            <div className={styles.textHeading}>{page.heading}</div>
+            <div className={styles.textRule} style={accentBg} />
+            <div className={styles.textParagraph}>{page.body}</div>
+            <div className={styles.textParagraph}>{page.body2}</div>
+          </div>
+          <div className={styles.authorCite}>{page.cite}</div>
+          <div className={styles.textFolio}>{page.folio}</div>
         </div>
       )}
 
@@ -180,7 +228,7 @@ export default function BookPage({ page }: { page: PageView }) {
           <div className={styles.contentsList}>
             {page.toc.map((row) => (
               <button key={row.page} type="button" className={styles.tocRow} onClick={row.go}>
-                <span className={styles.tocNumber}>{row.n}</span>
+                <span className={styles.tocNumber}>{row.n ?? ""}</span>
                 <span>{row.title}</span>
                 <span className={styles.tocLeader} />
                 <span className={styles.tocPage}>{row.page}</span>
@@ -194,7 +242,7 @@ export default function BookPage({ page }: { page: PageView }) {
       {page.isTable && (
         <div className={styles.table}>
           <div className={styles.tableHeader} style={accent}>
-            {page.continued ? `${page.band} — continued` : "Appendix"}
+            {page.continued ? `${page.band} — continued` : "The voting record"}
           </div>
           <div className={styles.tableColumn}>
             {page.heading && <div className={styles.tableHeading}>{page.heading}</div>}

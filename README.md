@@ -110,7 +110,7 @@ components/
   CoverPortrait.tsx    Cover still, then the morph over the top  (client)
   PrintBook.tsx        The paper edition, hidden on screen  (server)
 lib/
-  content.ts           Chapters, quotations, voting record; builds the 89-page sequence
+  content.ts           Chapters, quotations, voting record; builds the 91-page sequence
   config.ts            Cover colour, campaign details, disclaimer
 public/
   hanson-portrait.webp Cover still, transparent ground
@@ -211,9 +211,13 @@ a right-hand page. Single-page mode steps straight over blanks rather than showi
 screen.
 
 Both covers stand alone: nothing faces the front cover, and nothing faces the back one either.
-The page behind each is a blank, so suppressing it loses no content. The back cover mirrors the
-front — same ground, same keyline, same portrait slot, same display type — with the morph's
-punchline standing in for the portrait and **Racist Pig!** for the title.
+The page behind each is a blank, so suppressing it loses no content. The back cover keeps the
+front's ground and keyline and carries what a back cover is for — what to do next, the QR block,
+the campaign label and URL, and the authorisation line.
+
+Back matter runs: notes on sources, then **About the author**, which is where the morph's last
+frame ends up. Its two facts are the ones the data supports — the chamber and seat she holds, and
+her division attendance, cited.
 
 The geometry follows where a turn is *heading*, not where it started, so the book widens into a
 spread while the front cover is still swinging open and narrows back to a single leaf as the back
@@ -271,9 +275,11 @@ trade unions' powers in the workplace: 25%" means she voted against it four time
 "decreasing ABC and SBS funding: 96%" means she voted for it. The page states the measure rather
 than bucketing it into for/against, and prints each policy's TVFY number so any row can be checked.
 
-The record runs in full: all 184 policies across 27 leaves, grouped into the seven bands of TVFY's
-own scale, each band starting on a fresh leaf and continuing across as many as it needs. Nothing is
-selected, ranked or trimmed — the whole record is in the book.
+The record is a section of the book, not an appendix bolted to the end: it opens on a right-hand
+page behind its own title, the way a chapter does, and it is listed in the contents and on the
+jump chips. It runs in full — all 184 policies across 27 leaves, grouped into the seven bands of
+TVFY's own scale, each band starting on a fresh leaf and continuing across as many as it needs.
+Nothing is selected, ranked or trimmed.
 
 **The bands are computed, not read.** The schema has a `category` column that exists to hold
 exactly these buckets, but the sync leaves it null — for all 28,313 rows in the table, not just

@@ -386,7 +386,9 @@ export type PageType =
   | "contents"
   | "chapter"
   | "quote"
+  | "section"
   | "table"
+  | "author"
   | "back";
 
 export interface Page {
@@ -405,6 +407,8 @@ export interface Page {
   cite?: string;
   placeholder?: boolean;
   note?: string;
+  /** Section openers: the line under the rule. */
+  lead?: string;
   /** Voting-record leaves only. */
   band?: string;
   rows?: VoteRow[];
@@ -464,11 +468,21 @@ function buildPages(): Page[] {
     });
   });
 
+  /* The record is a section of the book, not an appendix bolted to the end, so
+     it opens the way a chapter does — on a right-hand page, behind its own
+     title. Its length is data-dependent, so pad to get there. */
+  if (pages.length % 2 === 1) pages.push({ type: "blank" });
+  pages.push({
+    type: "section",
+    short: "The Record",
+    heading: "The voting record",
+    body: "What she has done about it, every time the Senate divided.",
+    lead: `All ${ALL_POSITIONS.length} policies she has cast a vote on, grouped as ${RECORD_SOURCE} groups them.`,
+  });
+
   RECORD_PAGES.forEach((page, n) => {
     pages.push({
       type: "table",
-      // Only the opening leaf carries the section title.
-      heading: n === 0 ? "The voting record" : undefined,
       band: page.band,
       rows: page.rows,
       continued: page.continued,
@@ -485,6 +499,16 @@ function buildPages(): Page[] {
     heading: "Notes on sources",
     body: "Every quotation is to be cited to Hansard, a broadcast transcript, or a named publication with a date. Where a remark exists only on video, the citation will name the programme and the date of broadcast.",
     body2: "Corrections are welcome and will be made.",
+  });
+
+  pages.push({
+    type: "author",
+    short: "The Author",
+    kicker: "About the author",
+    heading: "Pauline Hanson",
+    body: `Senator for Queensland since 2016, for the party that carries her name. She was first elected to federal parliament in 1996.`,
+    body2: `She has attended ${MEMBER.votesAttended?.toLocaleString()} of ${MEMBER.votesPossible?.toLocaleString()} divisions — a little over half the votes she was there to cast.`,
+    cite: "Attendance from They Vote For You.",
   });
 
   /* The closing leaf, mirroring the opening one. The front cover is the recto
@@ -508,13 +532,29 @@ export const PAGES: Page[] = buildPages();
 export const CHAPTER_STARTS: Array<{ page: Page; index: number }> = PAGES.map((page, index) => ({
   page,
   index,
-})).filter((entry) => entry.page.type === "chapter");
+})).filter(
+  (entry) =>
+    entry.page.type === "chapter" ||
+    entry.page.type === "section" ||
+    entry.page.type === "author",
+);
 
 /** The pages that make it into the 105 × 148 mm print booklet. */
 export const PRINT_PAGES = PAGES.filter(
-  (p) => p.type === "quote" || p.type === "text" || p.type === "chapter" || p.type === "table",
+  (p) =>
+    p.type === "quote" ||
+    p.type === "text" ||
+    p.type === "chapter" ||
+    p.type === "section" ||
+    p.type === "table" ||
+    p.type === "author",
 ).map((p) => ({
-  kicker: p.type === "table" ? p.band ?? "Appendix" : p.kicker || `Chapter ${p.n ?? ""}`,
+  kicker:
+    p.type === "table"
+      ? p.band ?? ""
+      : p.type === "section"
+        ? "Section"
+        : p.kicker || `Chapter ${p.n ?? ""}`,
   heading: p.type === "quote" ? p.quote ?? "" : p.heading ?? "",
   body: p.type === "quote" ? "" : p.body ?? "",
   cite: p.cite ?? p.note ?? "",

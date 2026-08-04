@@ -290,6 +290,9 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
         isContents: p.type === "contents",
         isTable: p.type === "table",
         isBack: p.type === "back",
+        isSection: p.type === "section",
+        isAuthor: p.type === "author",
+        lead: p.lead,
         chapterNumber: p.n,
         heading: p.heading,
         body: p.body,
@@ -310,8 +313,9 @@ export default function Book({ config = bookConfig }: { config?: BookConfig }) {
         continued: !!p.continued,
         tableNote: p.note,
         toc: CHAPTER_STARTS.map(({ page, index }) => ({
-          n: page.n ?? 0,
-          title: page.heading ?? "",
+          n: page.n,
+          // "About the author" reads better in a contents list than her name.
+          title: (page.type === "author" ? page.kicker : page.heading) ?? "",
           page: index,
           go: () => goTo(index),
         })),
