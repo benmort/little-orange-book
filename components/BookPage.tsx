@@ -125,6 +125,19 @@ export default function BookPage({ page }: { page: PageView }) {
               <div className={styles.campaignUrl}>{page.campaignUrl}</div>
             </div>
           </div>
+          {/* Solid, no outline: at this size a drawn flag closes up into mud,
+              and the cover's only other ink is solid black too. */}
+          <svg
+            className={styles.backFlag}
+            viewBox="0 0 24 30"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M2 0h2v30H2z M4 1h18c-3 3-3 6 0 9H4z"
+              fill="#000"
+            />
+          </svg>
           <div className={styles.backDisclaimer}>{page.disclaimer}</div>
         </div>
       )}

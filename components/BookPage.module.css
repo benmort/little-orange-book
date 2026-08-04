@@ -567,6 +567,15 @@
   overflow-wrap: anywhere;
   word-break: normal;
 }
+/* Bottom right, inside the keyline and clear of the disclaimer's rule. */
+.backFlag {
+  position: absolute;
+  right: 30px;
+  bottom: 88px;
+  width: 22px;
+  height: 28px;
+  pointer-events: none;
+}
 .backDisclaimer {
   position: relative;
   font-size: 8.5px;
