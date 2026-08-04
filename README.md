@@ -113,6 +113,7 @@ lib/
   content.ts           Chapters, quotations, voting record; builds the 93-page sequence
   config.ts            Cover colour, campaign details, disclaimer
 public/
+  campaign-qr.svg      Back cover QR — generated, see below
   hanson-portrait.webp Cover still, transparent ground
   hanson-morph.webm    Hanson → Trump → pig morph, 15.2 s loop, alpha channel
   hanson-morph.mp4     H.264 fallback — no alpha, so this one has the orange baked in
@@ -313,6 +314,33 @@ Each figure carries a colour and an arrow — for at 66 % and over, against unde
 between. The arrow says the same thing as the colour, so the cue does not rest on colour alone, and
 the printed weights are darker than the screen ones because a literal yellow is unreadable on white
 stock.
+
+### The back cover QR
+
+Generated from `campaignUrl` in `lib/config.ts`, not drawn by hand:
+
+```bash
+npm run qr    # writes public/campaign-qr.svg
+```
+
+A build-time artefact — the code never changes between requests, and shipping a QR library to the
+client to draw a fixed square would be a megabyte of JavaScript doing nothing. SVG rather than PNG
+because it prints at about 25 mm and renders at 92 px, and a raster sized for one softens the module
+edges a scanner reads at the other.
+
+Three decisions worth knowing:
+
+- **It encodes the scheme** (`https://…`) even though the cover prints the URL without one. Scanners
+  key off the scheme to offer "open link"; a bare domain is treated as plain text by some.
+- **Error correction Q, not the usual M.** This goes on a booklet that will be folded, pocketed and
+  handed over. Q tolerates about a quarter of the code being obscured; the cost is a denser grid.
+- **The script scans its own output before finishing.** A longer `campaignUrl` pushes the code to a
+  denser version, and past a point it stops reading at the size it is printed — not something to
+  discover from a print run. It rasterises the SVG at 92 px with the quiet zone the cover's white
+  box provides, decodes it, and fails the command if it does not come back with the URL.
+
+That white box *is* the quiet zone. A QR printed hard against another colour loses its margin and
+scanners stop finding the corners.
 
 ### The aside
 

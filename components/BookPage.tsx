@@ -117,9 +117,8 @@ export default function BookPage({ page }: { page: PageView }) {
           </div>
           <div className={styles.backCampaign}>
             <div className={styles.qr}>
-              QR CODE
-              <br />
-              TO CAMPAIGN
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/campaign-qr.svg" alt={`QR code linking to ${page.campaignUrl}`} />
             </div>
             <div className={styles.campaign}>
               <div className={styles.campaignLabel}>{page.campaignLabel}</div>

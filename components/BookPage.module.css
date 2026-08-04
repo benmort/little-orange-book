@@ -538,20 +538,19 @@
   align-items: flex-end;
   gap: 14px;
 }
+/* The white box is the code's quiet zone — a QR printed hard against another
+   colour loses its margin and scanners stop finding the corners. */
 .qr {
   width: 92px;
   height: 92px;
   flex: none;
+  padding: 6px;
   background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #000;
-  font-size: 8.5px;
-  letter-spacing: 0.1em;
-  text-align: center;
-  padding: 8px;
-  line-height: 1.4;
+}
+.qr img {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 .campaign {
   font-size: 11px;
